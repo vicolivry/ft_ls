@@ -6,7 +6,7 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/07 15:21:13 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/02/07 20:08:17 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/02/08 17:44:31 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -16,6 +16,7 @@
 
 # include "./libftprintf/printf.h"
 # include <dirent.h>
+# include <sys/stat.h>
 
 # define FLAGS_LS "-Ralrt"
 
@@ -32,6 +33,8 @@ typedef struct			s_data_ls
 {
 	const char			*name;
 	int					time;
+	struct dirent		*dir;
+	struct stat			stat;
 	struct s_data_ls	*next;
 }						t_data_ls;
 
@@ -41,6 +44,8 @@ int						l_fmt(const char *file,
 		t_pars_ls pars, t_data_ls *data);
 t_data_ls				*new_data_ls(const char *str);
 t_data_ls				*parse_data_ls(const char *file, t_data_ls **data);
-
+int						parse_ls(t_pars_ls *pars, const char *str);
+t_pars_ls				init_pars_ls(t_pars_ls pars);
+int	ft_ls(const char *file, t_pars_ls pars);
 
 #endif
