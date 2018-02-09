@@ -6,7 +6,7 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/07 15:56:20 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/02/08 15:09:45 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/02/09 13:45:44 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -20,6 +20,7 @@ t_pars_ls	init_pars_ls(t_pars_ls pars)
 	pars.rr = 0;
 	pars.a = 0;
 	pars.t = 0;
+	pars.data = new_data_ls("");
 	return (pars);
 }
 

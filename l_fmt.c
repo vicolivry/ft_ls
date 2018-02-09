@@ -6,14 +6,14 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/07 18:14:13 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/02/07 18:31:43 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/02/09 14:05:33 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-int	l_fmt(const char *file, t_pars_ls pars, t_data_ls *data)
+int	l_fmt(const char *file, t_pars_ls pars)
 {
 	struct dirent	*dp;
 	DIR				*dirp;
