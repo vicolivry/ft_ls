@@ -6,7 +6,7 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/12 16:09:30 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/02/15 19:17:14 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/02/16 18:06:12 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -27,7 +27,8 @@ static void	recurse(const char *file, t_data_ls *data)
 		tmp->dir = dp;
 		tmp->path = ft_strjoin(file, "/");
 		tmp = parse_data_ls(tmp);
-		if (tmp->dir->d_type == DT_DIR && ft_strcmp(tmp->name, ".") && ft_strcmp(tmp->name, ".."))
+		if (tmp->dir->d_type == DT_DIR && check_permission(tmp) &&
+				ft_strcmp(tmp->name, ".") && ft_strcmp(tmp->name, ".."))
 		{
 			tmp->oth_lst = new_data_ls();
 			tmp->oth_lst->path = ft_strjoin(tmp->path, tmp->name);
@@ -53,7 +54,8 @@ void		ft_ls_r(const char *file, t_pars_ls strc)
 		tmp->dir = dp;
 		tmp->path = ft_strjoin(file, "/");
 		tmp = parse_data_ls(tmp);
-		if (tmp->dir->d_type == DT_DIR && ft_strcmp(tmp->name, ".") && ft_strcmp(tmp->name, ".."))
+		if (tmp->dir->d_type == DT_DIR && check_permission(tmp) &&
+				ft_strcmp(tmp->name, ".") && ft_strcmp(tmp->name, ".."))
 		{
 			tmp->oth_lst = new_data_ls();
 			tmp->oth_lst->path = ft_strjoin(tmp->path, tmp->name);
