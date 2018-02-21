@@ -6,7 +6,7 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/07 18:31:51 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/02/16 17:57:05 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/02/21 18:10:01 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -30,6 +30,8 @@ t_data_ls	*new_data_ls(void)
 	new->pwd = NULL;
 	new->gp = NULL;
 	new->date = NULL;
+	new->poly_arg = NULL;
+	new->access = 1;
 	new->len = 0;
 	new->size = 0;
 	return (new);
@@ -44,22 +46,20 @@ t_data_ls	*parse_data_ls(t_data_ls *data)
 
 	data->name = ft_strdup(data->dir->d_name);
 	tmpath = ft_strjoin(data->path, data->name);
-	stat(tmpath, &st);
+	lstat(tmpath, &st);
 	free(tmpath);
-	data->name = ft_strdup(data->dir->d_name);
 	data->len = ft_strlen(data->name);
 	data->chmod = chmod_ls(st);
+	data->access = check_permission(data);
 	data->blck = st.st_blocks;
 	data->nlnk = st.st_nlink;
 	data->size = st.st_size;
-	data->date = time_ls(st);
-	if (check_permission(data))
-	{
-		pswd = getpwuid(st.st_uid);
-		grp = getgrgid(st.st_gid);
-		data->gp = ft_strdup(grp->gr_name);
-		data->pwd = ft_strdup(pswd->pw_name);
-	}
+	data->time = st.st_mtime;
+	data->date = time_ls(data->time);
+	pswd = getpwuid(st.st_uid);
+	grp = getgrgid(st.st_gid);
+	data->gp = ft_strdup(grp->gr_name);
+	data->pwd = ft_strdup(pswd->pw_name);
+	data->next = NULL;
 	return (data);
 }
-

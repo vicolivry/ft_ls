@@ -6,7 +6,7 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/12 16:09:30 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/02/16 18:06:12 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/02/21 17:19:04 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -27,7 +27,12 @@ static void	recurse(const char *file, t_data_ls *data)
 		tmp->dir = dp;
 		tmp->path = ft_strjoin(file, "/");
 		tmp = parse_data_ls(tmp);
-		if (tmp->dir->d_type == DT_DIR && check_permission(tmp) &&
+		if (tmp->dir->d_type == DT_DIR && !tmp->access)
+		{
+			tmp->path = ft_strjoin(tmp->path, tmp->name);
+			tmp->path = ft_strjoin(tmp->path, "/");
+		}
+		else if (tmp->dir->d_type == DT_DIR && tmp->access &&
 				ft_strcmp(tmp->name, ".") && ft_strcmp(tmp->name, ".."))
 		{
 			tmp->oth_lst = new_data_ls();
@@ -46,7 +51,9 @@ void		ft_ls_r(const char *file, t_pars_ls strc)
 	t_dir		*dp;
 	DIR			*dirp;
 	t_data_ls	*tmp;
+	int			i;
 
+	i = 0;
 	tmp = strc.data;
 	dirp = opendir(file);
 	while ((dp = readdir(dirp)) != NULL)
@@ -54,7 +61,12 @@ void		ft_ls_r(const char *file, t_pars_ls strc)
 		tmp->dir = dp;
 		tmp->path = ft_strjoin(file, "/");
 		tmp = parse_data_ls(tmp);
-		if (tmp->dir->d_type == DT_DIR && check_permission(tmp) &&
+		if (tmp->dir->d_type == DT_DIR && !tmp->access)
+		{
+			tmp->path = ft_strjoin(tmp->path, tmp->name);
+			tmp->path = ft_strjoin(tmp->path, "/");
+		}
+		else if (tmp->dir->d_type == DT_DIR && tmp->access &&
 				ft_strcmp(tmp->name, ".") && ft_strcmp(tmp->name, ".."))
 		{
 			tmp->oth_lst = new_data_ls();
@@ -66,5 +78,4 @@ void		ft_ls_r(const char *file, t_pars_ls strc)
 		tmp = tmp->next;
 	}
 	closedir(dirp);
-	display(strc, strc.data);
 }

@@ -6,7 +6,7 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/07 15:36:04 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/02/16 11:42:44 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/02/21 17:58:36 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -31,34 +31,44 @@ void	ft_ls(const char *file, t_pars_ls strc)
 		tmp = tmp->next;
 	}
 	closedir(dirp);
-	display(strc, strc.data);
+}
+
+int		check_arg(const char *str)
+{
+	DIR		*dirp;
+
+	if ((dirp = opendir(str)) != NULL)
+	{
+		closedir(dirp);
+		return (1);
+	}
+	return (0);
 }
 
 int		main(int ac, const char **av)
 {
-	int			i;
 	int			j;
 	t_pars_ls	strc;
 
 	j = 0;
-	i = ac - 1;
 	strc = init_pars_ls();
 	if (ac == 1)
+	{
 		strc.rr ? ft_ls_r(".", strc) : ft_ls(".", strc);
+		display(strc, strc.data);
+	}
 	else
 	{
 		while (av[++j] && av[j][0] == '-' && j <= ac)
 			if (!(parse_ls(&strc, av[j])))
 				return (-1);
 		if (j == ac)
-			strc.rr ? ft_ls_r(".", strc) : ft_ls(".", strc);
-		else
 		{
-			if (!(strc.poly_arg = (char**)malloc(ac - j)))
-				return (-1);
-			while (i-- >= j)
-				strc.rr ? ft_ls_r(av[i], strc) : ft_ls(av[i], strc);
+			strc.rr ? ft_ls_r(".", strc) : ft_ls(".", strc);
+			display(strc, strc.data);
 		}
+		else
+			multifile(ac, j, av, strc);
 	}
 	return (0);
 }

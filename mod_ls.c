@@ -6,7 +6,7 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/09 11:12:09 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/02/15 19:20:09 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/02/21 18:39:04 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -39,14 +39,18 @@ char	*chmod_ls(t_st stat)
 	return (str);
 }
 
-char	*time_ls(t_st st)
+char	*time_ls(time_t date)
 {
-	char	*tmp1;
 	char	*tmp;
 	char	*str;
 
-	tmp = ctime(&st.st_mtime);
-	tmp1 = ft_strsub(tmp, 4, 12);
-	str = tmp1;
+	tmp = ctime(&date);
+	localtime(&date);
+	ft_printf("DATE : %D\n", date);
+	if (date > 1577880000)
+		tmp = ft_strsub(tmp, 20, 4);
+	else
+		tmp = ft_strsub(tmp, 4, 12);
+	str = tmp;
 	return (str);
 }
