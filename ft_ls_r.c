@@ -6,7 +6,7 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/12 16:09:30 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/02/21 17:19:04 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/02/22 17:37:44 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -55,6 +55,7 @@ void		ft_ls_r(const char *file, t_pars_ls strc)
 
 	i = 0;
 	tmp = strc.data;
+	
 	dirp = opendir(file);
 	while ((dp = readdir(dirp)) != NULL)
 	{

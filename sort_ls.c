@@ -6,7 +6,7 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/18 13:10:23 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/02/21 17:30:25 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/02/22 17:25:32 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -132,4 +132,24 @@ void				time_sort(t_data_ls *lst)
 	}
 	if (swap)
 		time_sort(lst);
+}
+
+void				rev_time_sort(t_data_ls *lst)
+{
+	t_data_ls	*tmp;
+	int			swap;
+
+	swap = 0;
+	tmp = lst;
+	while (tmp->next->next)
+	{
+		if (tmp->time > tmp->next->time)
+		{
+			swap_lst(&tmp, &tmp->next);
+			swap = 1;
+		}
+		tmp = tmp->next;
+	}
+	if (swap)
+		rev_time_sort(lst);
 }

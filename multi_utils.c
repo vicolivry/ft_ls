@@ -6,7 +6,7 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/21 11:51:13 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/02/21 18:11:43 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/02/22 17:26:47 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -22,8 +22,33 @@ static t_data_ls	*parse_multi_ls(t_data_ls *data)
 	data->time = st.st_mtime;
 	return (data);
 }
+/*
+static int			check_access(const char *str)
+{
+	t_st	st;
+	char	*chmod;
 
-void			multifile(int ac, int j, const char **av, t_pars_ls strc)
+	lstat (str, &st);
+	chmod = chmod_ls(st);
+	if (chmod[1] == '-')
+		return (0);
+	return (1);
+}
+*/
+static int			check_dir(const char *str)
+{
+	DIR		*dirp;
+	t_dir	*dp;
+	int		ret;
+
+	ret = 0;
+	if ((dirp = opendir(str)) != NULL)
+		if ((dp = readdir(dirp)) != NULL)
+			ret = dp->d_type == DT_DIR ? 1 : 0;
+	return (ret);
+}
+
+void				multifile(int ac, int j, const char **av, t_pars_ls strc)
 {
 	t_data_ls	*multi;
 	t_data_ls	*tmp;
@@ -32,7 +57,7 @@ void			multifile(int ac, int j, const char **av, t_pars_ls strc)
 	tmp = multi;
 	while (ac-- > j)
 	{
-		if (!check_arg(av[ac]))
+		if (!check_dir(ac[av]))
 			ft_printf("ft_ls: %s: No such file or directory\n", av[ac]);
 		else
 		{
@@ -45,9 +70,9 @@ void			multifile(int ac, int j, const char **av, t_pars_ls strc)
 	}
 	if (multi->next)
 	{
-		ascii_sort(multi);
+		strc.r ? rev_ascii_sort(multi) : ascii_sort(multi);
 		if (strc.t)
-			time_sort(multi);
+			strc.r ? rev_time_sort(multi) : time_sort(multi);
 	}
 	while (multi->next)
 	{

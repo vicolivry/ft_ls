@@ -6,7 +6,7 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/07 15:36:04 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/02/21 17:58:36 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/02/22 15:40:50 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -31,18 +31,6 @@ void	ft_ls(const char *file, t_pars_ls strc)
 		tmp = tmp->next;
 	}
 	closedir(dirp);
-}
-
-int		check_arg(const char *str)
-{
-	DIR		*dirp;
-
-	if ((dirp = opendir(str)) != NULL)
-	{
-		closedir(dirp);
-		return (1);
-	}
-	return (0);
 }
 
 int		main(int ac, const char **av)

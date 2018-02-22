@@ -6,7 +6,7 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/21 13:47:13 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/02/21 18:27:34 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/02/22 17:23:45 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -62,9 +62,9 @@ static void	print_noflag(t_pars_ls strc, t_data_ls *data)
 	t_data_ls	*tmp;
 
 	tmp = data;
-	ascii_sort(tmp);
+	strc.r ? rev_ascii_sort(tmp) : ascii_sort(tmp);
 	if (strc.t)
-		time_sort(tmp);
+		strc.r ? rev_time_sort(tmp) : time_sort(tmp);
 	if (ft_strcmp(tmp->path, "./") && ft_strcmp(tmp->name, "../"))
 	{
 		tmp->path[ft_strlen(tmp->path) - 1] = ':';

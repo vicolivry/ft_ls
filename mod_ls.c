@@ -6,7 +6,7 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/09 11:12:09 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/02/21 18:39:04 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/02/22 10:06:11 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -43,11 +43,11 @@ char	*time_ls(time_t date)
 {
 	char	*tmp;
 	char	*str;
+	time_t	now;
 
 	tmp = ctime(&date);
-	localtime(&date);
-	ft_printf("DATE : %D\n", date);
-	if (date > 1577880000)
+	time(&now);
+	if (now - date > 15778800)
 		tmp = ft_strsub(tmp, 20, 4);
 	else
 		tmp = ft_strsub(tmp, 4, 12);

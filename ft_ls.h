@@ -6,7 +6,7 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/07 15:21:13 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/02/21 15:44:19 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/02/22 17:21:25 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -32,7 +32,6 @@ typedef struct			s_pars_ls
 	int					rr;
 	int					a;
 	int					t;
-	char				**multi;
 	int					total_bck;
 	struct s_data_ls	*data;
 }						t_pars_ls;
@@ -52,7 +51,6 @@ typedef struct			s_data_ls
 	int					len;
 	int					blck;
 	int					access;
-	char				*poly_arg;
 	time_t				time;
 	struct s_data_ls	*oth_lst;
 	struct s_data_ls	*next;
@@ -80,7 +78,7 @@ void					swap_lst(t_data_ls **lst1, t_data_ls **lst2);
 void					ascii_sort(t_data_ls *lst);
 void					rev_ascii_sort(t_data_ls *lst);
 void					time_sort(t_data_ls *lst);
+void					rev_time_sort(t_data_ls *lst);
 void					display(t_pars_ls strc, t_data_ls *data);
 void					multifile(int ac, int j, const char **av, t_pars_ls strc);
-int						check_arg(const char *str);
 #endif
