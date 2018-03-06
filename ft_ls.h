@@ -6,7 +6,7 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/07 15:21:13 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/02/22 17:21:25 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/06 16:53:59 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -25,6 +25,15 @@
 
 # define FLAGS_LS "-Ralrt"
 
+typedef struct			s_len_ls
+{
+	int					nlnk;
+	int					pwd;
+	int					gp;
+	int					size;
+	int					name;
+}						t_len_ls;
+
 typedef struct			s_pars_ls
 {
 	int					l;
@@ -33,6 +42,7 @@ typedef struct			s_pars_ls
 	int					a;
 	int					t;
 	int					total_bck;
+	t_len_ls			len;
 	struct s_data_ls	*data;
 }						t_pars_ls;
 
@@ -71,7 +81,7 @@ void					ft_ls(const char *file, t_pars_ls strc);
 char					*chmod_ls(t_st stat);
 char					*time_ls(time_t date);
 void					ft_ls_r(const char *file, t_pars_ls strc);
-int						maxlen(t_data_ls *data);
+void					maxlen(t_pars_ls *strc, t_data_ls *data);
 int						check_permission(t_data_ls *data);
 int						total_bck(t_data_ls *data);
 void					swap_lst(t_data_ls **lst1, t_data_ls **lst2);
@@ -80,5 +90,6 @@ void					rev_ascii_sort(t_data_ls *lst);
 void					time_sort(t_data_ls *lst);
 void					rev_time_sort(t_data_ls *lst);
 void					display(t_pars_ls strc, t_data_ls *data);
+int						free_ls(t_data_ls *data);
 void					multifile(int ac, int j, const char **av, t_pars_ls strc);
 #endif

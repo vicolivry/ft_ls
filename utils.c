@@ -6,40 +6,41 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/16 13:12:41 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/02/22 18:26:11 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/06 15:43:46 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-int		maxlen(t_data_ls *data)
+void		maxlen(t_pars_ls *strc, t_data_ls *data)
 {
 	t_data_ls	*tmp;
-	int			len;
 
 	tmp = data;
-	len = 0;
 	while (tmp->next)
 	{
-		len = tmp->next->len > tmp->len ? tmp->next->len : len;
+		strc->len.name = ft_strlen(tmp->name) > strc->len.name ?
+			ft_strlen(tmp->name) : strc->len.name;
+		strc->len.nlnk = ft_strlen(ft_itoa(tmp->nlnk)) > strc->len.nlnk ?
+			ft_strlen(ft_itoa(tmp->nlnk)) : strc->len.nlnk;
+		strc->len.pwd = ft_strlen(tmp->pwd) > strc->len.pwd ? ft_strlen(tmp->pwd)
+			: strc->len.pwd;
+		strc->len.gp = ft_strlen(tmp->gp) > strc->len.gp ? ft_strlen(tmp->gp)
+			: strc->len.gp;
+		strc->len.size = ft_strlen(ft_itoa(tmp->size)) > strc->len.size ?
+			ft_strlen(ft_itoa(tmp->size)) : strc->len.size;
 		tmp = tmp->next;
 	}
-	return (len + 1);
+	tmp = data;
+	while (tmp)
+	{
+		if (tmp->oth_lst)
+			maxlen(strc, tmp->oth_lst);
+		tmp = tmp->next;
+	}
 }
-/*
-static int			check_access(const char *str)
-{
-	t_st	st;
-	char	*chmod;
 
-	lstat (str, &st);
-	chmod = chmod_ls(st);
-	if (chmod[1] == '-')
-		return (0);
-	return (1);
-}
-*/
 int		check_permission(t_data_ls *data)
 {
 	if (data->chmod[1] == '-' || data->chmod[4] == '-')

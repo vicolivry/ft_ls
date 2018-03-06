@@ -6,7 +6,7 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/09 11:12:09 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/02/22 10:06:11 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/06 17:03:19 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -41,16 +41,25 @@ char	*chmod_ls(t_st stat)
 
 char	*time_ls(time_t date)
 {
-	char	*tmp;
 	char	*str;
+	char	*tmp;
 	time_t	now;
+	int		i;
 
+	i = -1;
+	str = ft_strnew(12);
 	tmp = ctime(&date);
 	time(&now);
-	if (now - date > 15778800)
-		tmp = ft_strsub(tmp, 20, 4);
+	if (now - date > 15778800 || date - now > 15778800)
+	{
+		while (i++ < 5)
+			str[i] = tmp[4 + i];
+		str[i] = ' ';
+		while (i++ < 11)
+			str[i] = tmp[12 + i];
+	}
 	else
-		tmp = ft_strsub(tmp, 4, 12);
-	str = tmp;
+		while (i++ < 11)
+			str[i] = tmp[4 + i];
 	return (str);
 }

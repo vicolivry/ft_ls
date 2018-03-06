@@ -6,12 +6,24 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/07 15:56:20 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/02/20 13:42:34 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/06 16:56:31 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
+
+static t_len_ls	init_len(void)
+{
+	t_len_ls	len;
+
+	len.nlnk = 0;
+	len.pwd = 0;
+	len.gp = 0;
+	len.size = 0;
+	len.name = 0;
+	return (len);
+}
 
 t_pars_ls	init_pars_ls(void)
 {
@@ -22,6 +34,7 @@ t_pars_ls	init_pars_ls(void)
 	pars.rr = 0;
 	pars.a = 0;
 	pars.t = 0;
+	pars.len = init_len();
 	pars.data = new_data_ls();
 	return (pars);
 }
@@ -35,8 +48,8 @@ int			parse_ls(t_pars_ls *pars, const char *str)
 	{
 		if (!ft_strchr(FLAGS_LS, str[i]) || !ft_strcmp(str, "-"))
 		{
-			ft_printf("ls: illegal option -- %c", str[i]);
-			ft_printf("\nusage: ls [%s] [file ...]\n", FLAGS_LS);
+			ft_printf("ft_ls: illegal option -- %c", str[i]);
+			ft_printf("\nusage: ft_ls [%s] [file ...]\n", FLAGS_LS);
 			return (0);
 		}
 		else

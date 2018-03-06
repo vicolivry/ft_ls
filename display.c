@@ -5,21 +5,8 @@
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/02/21 13:47:13 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/02/22 17:23:45 by volivry     ###    #+. /#+    ###.fr     */
-/*                                                         /                  */
-/*                                                        /                   */
-/* ************************************************************************** */
-
-/* ************************************************************************** */
-/*                                                          LE - /            */
-/*                                                              /             */
-/*   display.c                                        .::    .:/ .      .::   */
-/*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
-/*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/02/13 16:16:04 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/02/21 13:38:26 by volivry     ###    #+. /#+    ###.fr     */
+/*   Created: 2018/03/06 13:38:59 by volivry      #+#   ##    ##    #+#       */
+/*   Updated: 2018/03/06 17:41:11 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -41,7 +28,7 @@ static void	print_flag_a(t_pars_ls strc, t_data_ls *data)
 		{
 			ft_printf("%s  %2d %s  %s %6d %s ", tmp->chmod, tmp->nlnk,
 					tmp->pwd, tmp->gp, tmp->size, tmp->date);
-			ft_printf("%-*s\n", maxlen(data), tmp->name);
+			ft_printf("%-*s\n", strc.len.name, tmp->name);
 		}
 		else
 			ft_printf("%s\n", tmp->name);
@@ -72,15 +59,18 @@ static void	print_noflag(t_pars_ls strc, t_data_ls *data)
 	}
 	if (strc.l)
 		ft_printf("total %d\n", total_bck(tmp));
+	/*ft_printf("LENS :\nnlnk: %d\npwd: %d\ngp: %d\nsize: %d\nname: %d\n",
+			strc.len.nlnk, strc.len.pwd, strc.len.gp, strc.len.size, strc.len.name);*/
 	while (tmp->next)
 	{
 		if (tmp->name[0] != '.')
 		{
 			if (strc.l)
 			{
-				ft_printf("%s  %2d %s  %s %6d %12s ", tmp->chmod, tmp->nlnk,
-						tmp->pwd, tmp->gp, tmp->size, tmp->date);
-				ft_printf("%-*s\n", maxlen(data), tmp->name);
+				ft_printf("%s %*d %-*s  %*s  %*d %s ", tmp->chmod, strc.len.nlnk, 
+						tmp->nlnk, strc.len.pwd, tmp->pwd, strc.len.gp, tmp->gp,
+						strc.len.size, tmp->size, tmp->date);
+				ft_printf("%s\n", tmp->name);
 			}
 			else
 				ft_printf("%s\n", tmp->name);
@@ -96,7 +86,6 @@ static void	print_noflag(t_pars_ls strc, t_data_ls *data)
 			tmp->path[ft_strlen(tmp->path) - 1] = ':';
 			ft_printf("%s\n", tmp->path);
 			ft_printf("ft_ls: %s: Permission denied\n\n", tmp->name);
-			free(tmp->name);
 		}
 		if (tmp->oth_lst && tmp->name[0] != '.')
 			print_noflag(strc, tmp->oth_lst);

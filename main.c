@@ -6,7 +6,7 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/07 15:36:04 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/02/22 15:40:50 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/06 17:50:02 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -44,6 +44,7 @@ int		main(int ac, const char **av)
 	{
 		strc.rr ? ft_ls_r(".", strc) : ft_ls(".", strc);
 		display(strc, strc.data);
+		free_ls(strc.data);
 	}
 	else
 	{
@@ -53,7 +54,9 @@ int		main(int ac, const char **av)
 		if (j == ac)
 		{
 			strc.rr ? ft_ls_r(".", strc) : ft_ls(".", strc);
+			maxlen(&strc, strc.data);
 			display(strc, strc.data);
+			free_ls(strc.data);
 		}
 		else
 			multifile(ac, j, av, strc);

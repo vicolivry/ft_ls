@@ -6,7 +6,7 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/21 11:51:13 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/02/22 17:26:47 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/06 17:46:05 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -45,6 +45,7 @@ static int			check_dir(const char *str)
 	if ((dirp = opendir(str)) != NULL)
 		if ((dp = readdir(dirp)) != NULL)
 			ret = dp->d_type == DT_DIR ? 1 : 0;
+	closedir(dirp);
 	return (ret);
 }
 
@@ -74,11 +75,14 @@ void				multifile(int ac, int j, const char **av, t_pars_ls strc)
 		if (strc.t)
 			strc.r ? rev_time_sort(multi) : time_sort(multi);
 	}
-	while (multi->next)
+	tmp = multi;
+	while (tmp->next)
 	{
 		strc.rr ? ft_ls_r(multi->name, strc) : ft_ls(multi->name, strc);
+		maxlen(&strc, strc.data);
 		display(strc, strc.data);
+		free_ls(strc.data);
 		strc.data = new_data_ls();
-		multi = multi->next;
+		tmp = tmp->next;
 	}
 }
