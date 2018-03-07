@@ -6,7 +6,7 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/16 13:12:41 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/06 15:43:46 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/06 19:04:03 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -22,14 +22,14 @@ void		maxlen(t_pars_ls *strc, t_data_ls *data)
 	{
 		strc->len.name = ft_strlen(tmp->name) > strc->len.name ?
 			ft_strlen(tmp->name) : strc->len.name;
-		strc->len.nlnk = ft_strlen(ft_itoa(tmp->nlnk)) > strc->len.nlnk ?
-			ft_strlen(ft_itoa(tmp->nlnk)) : strc->len.nlnk;
-		strc->len.pwd = ft_strlen(tmp->pwd) > strc->len.pwd ? ft_strlen(tmp->pwd)
-			: strc->len.pwd;
+		strc->len.nlnk = ft_nb_len(tmp->nlnk) > strc->len.nlnk ?
+			ft_nb_len(tmp->nlnk) : strc->len.nlnk;
+		strc->len.pwd = ft_strlen(tmp->pwd) > strc->len.pwd ?
+			ft_strlen(tmp->pwd) : strc->len.pwd;
 		strc->len.gp = ft_strlen(tmp->gp) > strc->len.gp ? ft_strlen(tmp->gp)
 			: strc->len.gp;
-		strc->len.size = ft_strlen(ft_itoa(tmp->size)) > strc->len.size ?
-			ft_strlen(ft_itoa(tmp->size)) : strc->len.size;
+		strc->len.size = ft_nb_len(tmp->size) > strc->len.size ?
+			ft_nb_len(tmp->size) : strc->len.size;
 		tmp = tmp->next;
 	}
 	tmp = data;

@@ -6,7 +6,7 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/07 15:21:13 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/06 16:53:59 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/07 14:30:55 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -62,6 +62,7 @@ typedef struct			s_data_ls
 	int					blck;
 	int					access;
 	time_t				time;
+	char*				link;
 	struct s_data_ls	*oth_lst;
 	struct s_data_ls	*next;
 }						t_data_ls;

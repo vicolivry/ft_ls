@@ -6,7 +6,7 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/03/06 13:38:59 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/06 17:41:11 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/07 16:11:40 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -59,18 +59,20 @@ static void	print_noflag(t_pars_ls strc, t_data_ls *data)
 	}
 	if (strc.l)
 		ft_printf("total %d\n", total_bck(tmp));
-	/*ft_printf("LENS :\nnlnk: %d\npwd: %d\ngp: %d\nsize: %d\nname: %d\n",
-			strc.len.nlnk, strc.len.pwd, strc.len.gp, strc.len.size, strc.len.name);*/
 	while (tmp->next)
 	{
 		if (tmp->name[0] != '.')
 		{
 			if (strc.l)
 			{
-				ft_printf("%s %*d %-*s  %*s  %*d %s ", tmp->chmod, strc.len.nlnk, 
+				ft_printf("%s %*d %*s  %*s  %*d %s ", tmp->chmod, strc.len.nlnk, 
 						tmp->nlnk, strc.len.pwd, tmp->pwd, strc.len.gp, tmp->gp,
 						strc.len.size, tmp->size, tmp->date);
-				ft_printf("%s\n", tmp->name);
+				ft_printf("%s", tmp->name);
+				if (tmp->link)
+					ft_printf(" %s\n", tmp->link);
+				else
+					ft_putchar('\n');
 			}
 			else
 				ft_printf("%s\n", tmp->name);

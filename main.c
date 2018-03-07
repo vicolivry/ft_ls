@@ -6,7 +6,7 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/07 15:36:04 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/06 17:50:02 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/07 13:27:07 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -18,13 +18,17 @@ void	ft_ls(const char *file, t_pars_ls strc)
 	t_dir		*dp;
 	DIR			*dirp;
 	t_data_ls	*tmp;
+	char		*str;
 
 	tmp = strc.data;
 	dirp = opendir(file);
 	while ((dp = readdir(dirp)) != NULL)
 	{
 		tmp->dir = dp;
-		tmp->path = ft_strjoin(file, "/");
+		
+		str = ft_strjoin(file, "/");
+		tmp->path = ft_strdup(str);
+		ft_memdel((void**)&str);
 		tmp = parse_data_ls(tmp);
 		if (tmp->next == NULL)
 			tmp->next = new_data_ls();

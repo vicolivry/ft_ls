@@ -6,7 +6,7 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/18 13:10:23 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/02/22 17:25:32 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/07 14:42:43 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -18,6 +18,7 @@ static t_data_ls	*new_swap(t_data_ls *lst1)
 	t_data_ls	*tmp;
 
 	tmp = new_data_ls();
+	tmp->link = lst1->link;
 	tmp->name = lst1->name;
 	tmp->path = lst1->path;
 	tmp->dir = lst1->dir;
@@ -42,6 +43,7 @@ void				swap_lst(t_data_ls **lst1, t_data_ls **lst2)
 
 	tmp = new_swap(*lst1);
 	(*lst1)->name = (*lst2)->name;
+	(*lst1)->link = (*lst2)->link;
 	(*lst1)->path = (*lst2)->path;
 	(*lst1)->dir = (*lst2)->dir;
 	(*lst1)->stat = (*lst2)->stat;
@@ -63,6 +65,7 @@ void				swap_lst(t_data_ls **lst1, t_data_ls **lst2)
 	(*lst2)->nlnk = tmp->nlnk;
 	(*lst2)->chmod = tmp->chmod;
 	(*lst2)->pwd = tmp->pwd;
+	(*lst2)->link = tmp->link;
 	(*lst2)->gp = tmp->gp;
 	(*lst2)->time = tmp->time;
 	(*lst2)->date = tmp->date;

@@ -6,7 +6,7 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/12 16:09:30 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/06 11:45:24 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/07 13:43:44 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -19,25 +19,36 @@ static void	recurse(const char *file, t_data_ls *data)
 	t_dir		*dp;
 	DIR			*dirp;
 	t_data_ls	*tmp;
+	char		*str;
 
 	tmp = data;
 	dirp = opendir(file);
 	while ((dp = readdir(dirp)) != NULL)
 	{
 		tmp->dir = dp;
-		tmp->path = ft_strjoin(file, "/");
+		str = ft_strjoin(file, "/");
+		tmp->path = ft_strdup(str);
+		ft_memdel((void**)&str);
 		tmp = parse_data_ls(tmp);
 		if (tmp->dir->d_type == DT_DIR && !tmp->access)
 		{
-			tmp->path = ft_strjoin(tmp->path, tmp->name);
-			tmp->path = ft_strjoin(tmp->path, "/");
+			str = ft_strjoin(tmp->path, tmp->name);
+			ft_memdel((void**)&tmp->path);
+			tmp->path = ft_strdup(str);
+			ft_memdel((void**)&str);
+			str = ft_strjoin(tmp->path, "/");
+			ft_memdel((void**)&tmp->path);
+			tmp->path = ft_strdup(str);
+			ft_memdel((void**)&str);
 		}
 		else if (tmp->dir->d_type == DT_DIR && tmp->access &&
 				ft_strcmp(tmp->name, ".") && ft_strcmp(tmp->name, ".."))
 		{
 			tmp->oth_lst = new_data_ls();
-			tmp->oth_lst->path = ft_strjoin(tmp->path, tmp->name);
-			recurse(tmp->oth_lst->path, tmp->oth_lst);
+			str = ft_strjoin(tmp->path, tmp->name);
+			recurse(str, tmp->oth_lst);
+			ft_memdel((void**)&str);
+
 		}
 		if (tmp->next == NULL)
 			tmp->next = new_data_ls();
@@ -52,6 +63,7 @@ void		ft_ls_r(const char *file, t_pars_ls strc)
 	DIR			*dirp;
 	t_data_ls	*tmp;
 	int			i;
+	char		*str;
 
 	i = 0;
 	tmp = strc.data;
@@ -60,19 +72,28 @@ void		ft_ls_r(const char *file, t_pars_ls strc)
 	while ((dp = readdir(dirp)) != NULL)
 	{
 		tmp->dir = dp;
-		tmp->path = ft_strjoin(file, "/");
+		str = ft_strjoin(file, "/");
+		tmp->path = ft_strdup(str);
+		ft_memdel((void**)&str);
 		tmp = parse_data_ls(tmp);
 		if (tmp->dir->d_type == DT_DIR && !tmp->access)
 		{
-			tmp->path = ft_strjoin(tmp->path, tmp->name);
-			tmp->path = ft_strjoin(tmp->path, "/");
+			str = ft_strjoin(tmp->path, tmp->name);
+			ft_memdel((void**)&tmp->path);
+			tmp->path = ft_strdup(str);
+			ft_memdel((void**)&str);
+			str = ft_strjoin(tmp->path, "/");
+			ft_memdel((void**)&tmp->path);
+			tmp->path = ft_strdup(str);
+			ft_memdel((void**)&str);
 		}
 		else if (tmp->dir->d_type == DT_DIR && tmp->access &&
 				ft_strcmp(tmp->name, ".") && ft_strcmp(tmp->name, ".."))
 		{
 			tmp->oth_lst = new_data_ls();
-			tmp->oth_lst->path = ft_strjoin(tmp->path, tmp->name);
-			recurse(tmp->oth_lst->path, tmp->oth_lst);
+			str = ft_strjoin(tmp->path, tmp->name);
+			recurse(str, tmp->oth_lst);
+			ft_memdel((void**)&str);
 		}
 		if (tmp->next == NULL)
 			tmp->next = new_data_ls();
