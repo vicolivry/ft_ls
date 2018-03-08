@@ -6,7 +6,7 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/18 13:10:23 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/07 14:42:43 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/08 14:31:15 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -84,15 +84,16 @@ void				ascii_sort(t_data_ls *lst)
 
 	swap = 0;
 	tmp = lst;
-	while (tmp->next->next)
-	{
-		if (ft_strcmp(tmp->name, tmp->next->name) > 0)
+	if (tmp->access)
+		while (tmp->next->next)
 		{
-			swap_lst(&tmp, &tmp->next);
-			swap = 1;
+			if (ft_strcmp(tmp->name, tmp->next->name) > 0)
+			{
+				swap_lst(&tmp, &tmp->next);
+				swap = 1;
+			}
+			tmp = tmp->next;
 		}
-		tmp = tmp->next;
-	}
 	if (swap)
 		ascii_sort(lst);
 }

@@ -6,7 +6,7 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/03/06 13:38:59 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/07 16:11:40 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/08 14:58:02 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -58,7 +58,10 @@ static void	print_noflag(t_pars_ls strc, t_data_ls *data)
 		ft_printf("%s\n", tmp->path);
 	}
 	if (strc.l)
-		ft_printf("total %d\n", total_bck(tmp));
+	{
+		if (tmp->access && tmp->next->next->next)
+			ft_printf("total %d\n", total_bck(tmp));
+	}
 	while (tmp->next)
 	{
 		if (tmp->name[0] != '.')
@@ -83,13 +86,15 @@ static void	print_noflag(t_pars_ls strc, t_data_ls *data)
 	tmp = data;
 	while (tmp)
 	{
-		if (!tmp->access && strc.rr)
+		if (!tmp->access && tmp->oth_lst && strc.rr)
 		{
-			tmp->path[ft_strlen(tmp->path) - 1] = ':';
-			ft_printf("%s\n", tmp->path);
-			ft_printf("ft_ls: %s: Permission denied\n\n", tmp->name);
+			tmp->oth_lst->path[ft_strlen(tmp->oth_lst->path) - 1] = ':';
+			ft_printf("%s\n", tmp->oth_lst->path);
+			ft_putstr_fd("ft_ls: ", 2);
+			ft_putstr_fd(tmp->oth_lst->name, 2);
+			ft_putstr_fd(": Permission denied\n\n", 2);
 		}
-		if (tmp->oth_lst && tmp->name[0] != '.')
+		if (tmp->access && tmp->oth_lst && tmp->name[0] != '.')
 			print_noflag(strc, tmp->oth_lst);
 		tmp = tmp->next;
 	}

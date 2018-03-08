@@ -6,7 +6,7 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/16 13:12:41 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/06 19:04:03 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/08 13:59:07 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -41,11 +41,11 @@ void		maxlen(t_pars_ls *strc, t_data_ls *data)
 	}
 }
 
-int		check_permission(t_data_ls *data)
+int		check_permission(t_st st)
 {
-	if (data->chmod[1] == '-' || data->chmod[4] == '-')
-		return (0);
-	return (1);
+	if (st.st_mode & EACCES)
+		return (1);
+	return (0);
 }
 
 int		total_bck(t_data_ls *data)

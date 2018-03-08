@@ -6,7 +6,7 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/07 18:31:51 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/07 17:03:27 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/08 18:28:32 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -40,7 +40,7 @@ t_data_ls	*new_data_ls(void)
 	return (new);
 }
 
-static char	*fill_link(char *path, t_st st)
+char	*fill_link(char *path, t_st st)
 {
 	char	*str;
 	char	*ret;
@@ -77,13 +77,14 @@ t_data_ls	*parse_data_ls(t_data_ls *data)
 	data->name = ft_strdup(data->dir->d_name);
 	tmpath = ft_strjoin(data->path, data->name);
 	lstat(tmpath, &st);
+	if (data->dir->d_type == DT_DIR)
+		data->access = check_permission(st);
 	data->len = ft_strlen(data->name);
 	data->chmod = chmod_ls(st);
 	pswd = getpwuid(st.st_uid);
 	grp = getgrgid(st.st_gid);
 	data->gp = ft_strdup(grp->gr_name);
 	data->pwd = ft_strdup(pswd->pw_name);
-	data->access = check_permission(data);
 	data->blck = st.st_blocks;
 	data->nlnk = st.st_nlink;
 	data->size = st.st_size;
