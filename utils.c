@@ -6,7 +6,7 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/16 13:12:41 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/08 13:59:07 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/09 15:34:20 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -24,7 +24,8 @@ void		maxlen(t_pars_ls *strc, t_data_ls *data)
 			ft_strlen(tmp->name) : strc->len.name;
 		strc->len.nlnk = ft_nb_len(tmp->nlnk) > strc->len.nlnk ?
 			ft_nb_len(tmp->nlnk) : strc->len.nlnk;
-		strc->len.pwd = ft_strlen(tmp->pwd) > strc->len.pwd ?
+		if (tmp->pwd)
+			strc->len.pwd = ft_strlen(tmp->pwd) > strc->len.pwd ?
 			ft_strlen(tmp->pwd) : strc->len.pwd;
 		strc->len.gp = ft_strlen(tmp->gp) > strc->len.gp ? ft_strlen(tmp->gp)
 			: strc->len.gp;
@@ -41,10 +42,15 @@ void		maxlen(t_pars_ls *strc, t_data_ls *data)
 	}
 }
 
-int		check_permission(t_st st)
+int		check_permission(char *str)
 {
-	if (st.st_mode & EACCES)
+	DIR	*dirp;
+
+	if ((dirp = opendir(str)) != NULL)
+	{
+		closedir(dirp);
 		return (1);
+	}
 	return (0);
 }
 

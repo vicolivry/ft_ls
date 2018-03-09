@@ -6,7 +6,7 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/07 15:21:13 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/08 18:41:43 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/09 18:07:54 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -65,6 +65,8 @@ typedef struct			s_data_ls
 	time_t				time;
 	char*				link;
 	int					error;
+	int					minor;
+	int					major;
 	struct s_data_ls	*oth_lst;
 	struct s_data_ls	*next;
 }						t_data_ls;
@@ -85,7 +87,7 @@ char					*chmod_ls(t_st stat);
 char					*time_ls(time_t date);
 void					ft_ls_r(const char *file, t_pars_ls strc);
 void					maxlen(t_pars_ls *strc, t_data_ls *data);
-int						check_permission(t_st st);
+int						check_permission(char *str);
 int						total_bck(t_data_ls *data);
 void					swap_lst(t_data_ls **lst1, t_data_ls **lst2);
 void					ascii_sort(t_data_ls *lst);

@@ -6,7 +6,7 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/03/06 13:38:59 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/08 14:58:02 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/09 18:58:47 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -52,7 +52,7 @@ static void	print_noflag(t_pars_ls strc, t_data_ls *data)
 	strc.r ? rev_ascii_sort(tmp) : ascii_sort(tmp);
 	if (strc.t)
 		strc.r ? rev_time_sort(tmp) : time_sort(tmp);
-	if (ft_strcmp(tmp->path, "./") && ft_strcmp(tmp->name, "../"))
+	if (tmp->path && ft_strcmp(tmp->path, "./") && ft_strcmp(tmp->name, "../"))
 	{
 		tmp->path[ft_strlen(tmp->path) - 1] = ':';
 		ft_printf("%s\n", tmp->path);
@@ -68,10 +68,13 @@ static void	print_noflag(t_pars_ls strc, t_data_ls *data)
 		{
 			if (strc.l)
 			{
-				ft_printf("%s %*d %*s  %*s  %*d %s ", tmp->chmod, strc.len.nlnk, 
-						tmp->nlnk, strc.len.pwd, tmp->pwd, strc.len.gp, tmp->gp,
-						strc.len.size, tmp->size, tmp->date);
-				ft_printf("%s", tmp->name);
+				ft_printf("%s %*d %*s  %*s ", tmp->chmod, strc.len.nlnk, 
+						tmp->nlnk, strc.len.pwd, tmp->pwd, strc.len.gp, tmp->gp);
+				if (tmp->chmod[0] == 'b' || tmp->chmod[0] == 'c')
+					ft_printf("%d, %d ", tmp->major, tmp->minor);
+				else
+					ft_printf("%*d ", strc.len.size, tmp->size);
+				ft_printf(" %s %s", tmp->date, tmp->name);
 				if (tmp->link)
 					ft_printf(" %s\n", tmp->link);
 				else
@@ -92,7 +95,7 @@ static void	print_noflag(t_pars_ls strc, t_data_ls *data)
 			ft_printf("%s\n", tmp->oth_lst->path);
 			ft_putstr_fd("ft_ls: ", 2);
 			ft_putstr_fd(tmp->oth_lst->name, 2);
-			ft_putstr_fd(": Permission denied\n\n", 2);
+			ft_putstr_fd(": Permission denied\n", 2);
 		}
 		if (tmp->access && tmp->oth_lst && tmp->name[0] != '.')
 			print_noflag(strc, tmp->oth_lst);

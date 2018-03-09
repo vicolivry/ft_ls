@@ -6,7 +6,7 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/03/08 18:28:49 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/08 18:53:25 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/09 18:59:00 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -98,7 +98,7 @@ void		multifile(int ac, int j, const char **av, t_pars_ls strc)
 		strc.rr ? ft_ls_r(tmp->name, strc) : ft_ls(tmp->name, strc);
 		maxlen(&strc, strc.data);
 		display(strc, strc.data);
-		free_ls(strc.data);
+	//	free_ls(strc.data);
 		strc.data = new_data_ls();
 		tmp = tmp->next;
 	}

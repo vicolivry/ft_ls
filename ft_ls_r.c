@@ -6,7 +6,7 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/12 16:09:30 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/08 14:59:43 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/09 16:55:03 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -27,7 +27,8 @@ static void	recurse(const char *file, t_data_ls *data)
 	{
 		tmp->dir = dp;
 		str = ft_strjoin(file, "/");
-		tmp->path = ft_strdup(str);
+		tmp->path = file[ft_strlen(file) - 1] == '/' ? ft_strdup(file)
+			: ft_strdup(str);
 		ft_memdel((void**)&str);
 		tmp = parse_data_ls(tmp);
 		if (tmp->dir->d_type == DT_DIR && !tmp->access)
@@ -58,7 +59,7 @@ static void	recurse(const char *file, t_data_ls *data)
 		tmp = tmp->next;
 	}
 	closedir(dirp);
-}
+	}
 
 
 
@@ -78,7 +79,8 @@ void		ft_ls_r(const char *file, t_pars_ls strc)
 	{
 		tmp->dir = dp;
 		str = ft_strjoin(file, "/");
-		tmp->path = ft_strdup(str);
+		tmp->path = file[ft_strlen(file) - 1] == '/' ? ft_strdup(file)
+			: ft_strdup(str);
 		ft_memdel((void**)&str);
 		tmp = parse_data_ls(tmp);
 		if (tmp->dir->d_type == DT_DIR && !tmp->access)
