@@ -6,7 +6,7 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/18 13:10:23 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/12 14:28:15 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/12 18:12:05 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -38,9 +38,30 @@ static t_data_ls	*new_swap(t_data_ls *lst1)
 	return (tmp);
 }
 
+static void			swap_lst2(t_data_ls **lst2, t_data_ls **tmp)
+{
+	(*lst2)->name = (*tmp)->name;
+	(*lst2)->path = (*tmp)->path;
+	(*lst2)->dir = (*tmp)->dir;
+	(*lst2)->nlnk = (*tmp)->nlnk;
+	(*lst2)->chmod = (*tmp)->chmod;
+	(*lst2)->pwd = (*tmp)->pwd;
+	(*lst2)->link = (*tmp)->link;
+	(*lst2)->gp = (*tmp)->gp;
+	(*lst2)->time = (*tmp)->time;
+	(*lst2)->date = (*tmp)->date;
+	(*lst2)->size = (*tmp)->size;
+	(*lst2)->len = (*tmp)->len;
+	(*lst2)->blck = (*tmp)->blck;
+	(*lst2)->access = (*tmp)->access;
+	(*lst2)->oth_lst = (*tmp)->oth_lst;
+	(*lst2)->minor = (*tmp)->minor;
+	(*lst2)->major = (*tmp)->major;
+}
+
 void				swap_lst(t_data_ls **lst1, t_data_ls **lst2)
 {
-	t_data_ls *tmp;
+	t_data_ls	*tmp;
 
 	tmp = new_swap(*lst1);
 	(*lst1)->name = (*lst2)->name;
@@ -60,104 +81,6 @@ void				swap_lst(t_data_ls **lst1, t_data_ls **lst2)
 	(*lst1)->oth_lst = (*lst2)->oth_lst;
 	(*lst1)->minor = (*lst2)->minor;
 	(*lst1)->major = (*lst2)->major;
-	(*lst2)->name = tmp->name;
-	(*lst2)->path = tmp->path;
-	(*lst2)->dir = tmp->dir;
-	(*lst2)->nlnk = tmp->nlnk;
-	(*lst2)->chmod = tmp->chmod;
-	(*lst2)->pwd = tmp->pwd;
-	(*lst2)->link = tmp->link;
-	(*lst2)->gp = tmp->gp;
-	(*lst2)->time = tmp->time;
-	(*lst2)->date = tmp->date;
-	(*lst2)->size = tmp->size;
-	(*lst2)->len = tmp->len;
-	(*lst2)->blck = tmp->blck;
-	(*lst2)->access = tmp->access;
-	(*lst2)->oth_lst = tmp->oth_lst;
-	(*lst2)->minor = tmp->minor;
-	(*lst2)->major = tmp->major;
-
+	swap_lst2(lst2, &tmp);
 	free(tmp);
-}
-
-void				ascii_sort(t_data_ls *lst)
-{
-	t_data_ls	*tmp;
-	int			swap;
-
-	swap = 0;
-	tmp = lst;
-	if (tmp->access)
-		while (tmp->next->next)
-		{
-			if (ft_strcmp(tmp->name, tmp->next->name) > 0)
-			{
-				swap_lst(&tmp, &tmp->next);
-				swap = 1;
-			}
-			tmp = tmp->next;
-		}
-	if (swap)
-		ascii_sort(lst);
-}
-
-void				rev_ascii_sort(t_data_ls *lst)
-{
-	t_data_ls	*tmp;
-	int			swap;
-
-	swap = 0;
-	tmp = lst;
-	while (tmp->next->next)
-	{
-		if (ft_strcmp(tmp->name, tmp->next->name) < 0)
-		{
-			swap_lst(&tmp, &tmp->next);
-			swap = 1;
-		}
-		tmp = tmp->next;
-	}
-	if (swap)
-		rev_ascii_sort(lst);
-}
-
-void				time_sort(t_data_ls *lst)
-{
-	t_data_ls	*tmp;
-	int			swap;
-
-	swap = 0;
-	tmp = lst;
-	while (tmp->next->next)
-	{
-		if (tmp->time < tmp->next->time)
-		{
-			swap_lst(&tmp, &tmp->next);
-			swap = 1;
-		}
-		tmp = tmp->next;
-	}
-	if (swap)
-		time_sort(lst);
-}
-
-void				rev_time_sort(t_data_ls *lst)
-{
-	t_data_ls	*tmp;
-	int			swap;
-
-	swap = 0;
-	tmp = lst;
-	while (tmp->next->next)
-	{
-		if (tmp->time > tmp->next->time)
-		{
-			swap_lst(&tmp, &tmp->next);
-			swap = 1;
-		}
-		tmp = tmp->next;
-	}
-	if (swap)
-		rev_time_sort(lst);
 }

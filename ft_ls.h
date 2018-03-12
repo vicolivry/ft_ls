@@ -6,7 +6,7 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/07 15:21:13 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/12 14:27:50 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/12 18:55:09 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -62,7 +62,7 @@ typedef struct			s_data_ls
 	int					blck;
 	int					access;
 	time_t				time;
-	char*				link;
+	char				*link;
 	int					error;
 	int					minor;
 	int					major;
@@ -94,12 +94,16 @@ void					rev_ascii_sort(t_data_ls *lst);
 void					time_sort(t_data_ls *lst);
 void					rev_time_sort(t_data_ls *lst);
 void					display(t_pars_ls strc, t_data_ls *data);
-int						free_ls(t_data_ls *data);
+void					free_ls(t_data_ls *data);
 char					*fill_link(char *path, t_st st);
 t_data_ls				*parse_multi_ls(t_data_ls *data);
 int						check_exist(const char *str);
 int						check_dir(const char *str);
 t_data_ls				*no_such_file(const char *str, t_data_ls *data);
 t_data_ls				*no_dir(const char *str, t_data_ls *data);
-void					multifile(int ac, int j, const char **av, t_pars_ls strc);
+void					recurse2(t_data_ls *tmp, char *str);
+void					print_flag_a(t_pars_ls strc, t_data_ls *data);
+void					print_noflag(t_pars_ls strc, t_data_ls *data);
+void					multifile(int ac, int j, const char **av,
+						t_pars_ls strc);
 #endif

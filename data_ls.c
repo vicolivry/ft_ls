@@ -6,7 +6,7 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/07 18:31:51 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/12 16:52:12 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/12 17:22:39 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -42,7 +42,7 @@ t_data_ls	*new_data_ls(void)
 	return (new);
 }
 
-char	*fill_link(char *path, t_st st)
+char		*fill_link(char *path, t_st st)
 {
 	char	*str;
 	char	*ret;
@@ -61,12 +61,26 @@ char	*fill_link(char *path, t_st st)
 			str[i] = '\0';
 	}
 	str[eof] = '\0';
-	tmp = ft_strjoin (ret, str);
+	tmp = ft_strjoin(ret, str);
 	ft_memdel((void**)&ret);
 	ret = ft_strdup(tmp);
 	ft_memdel((void**)&tmp);
 	ft_memdel((void**)&str);
 	return (ret);
+}
+
+static void	min_maj_ls(t_data_ls **data, t_st st)
+{
+	(*data)->minor = st.st_rdev & 0xffffff;
+	(*data)->major = (st.st_rdev >> 24) & 0xff;
+}
+
+static void	parse_data_2(t_data_ls **data, t_st st)
+{
+	(*data)->blck = st.st_blocks;
+	(*data)->nlnk = st.st_nlink;
+	(*data)->size = st.st_size;
+	(*data)->time = st.st_mtime;
 }
 
 t_data_ls	*parse_data_ls(t_data_ls *data)
@@ -87,18 +101,11 @@ t_data_ls	*parse_data_ls(t_data_ls *data)
 	grp = getgrgid(st.st_gid);
 	data->gp = grp ? ft_strdup(grp->gr_name) : ft_itoa(st.st_gid);
 	data->pwd = pswd ? ft_strdup(pswd->pw_name) : ft_itoa(st.st_uid);
-	data->blck = st.st_blocks;
-	data->nlnk = st.st_nlink;
-	data->size = st.st_size;
-	data->time = st.st_mtime;
-
+	parse_data_2(&data, st);
 	data->link = S_ISLNK(st.st_mode) ? fill_link(tmpath, st) : data->link;
 	data->date = time_ls(data->time);
-	if (S_ISCHR(st.st_mode)|| S_ISBLK(st.st_mode))
-	{
-		data->minor = st.st_rdev & 0xffffff;
-		data->major = (st.st_rdev >> 24) & 0xff;
-	}
+	if (S_ISCHR(st.st_mode) || S_ISBLK(st.st_mode))
+		min_maj_ls(&data, st);
 	data->next = NULL;
 	ft_memdel((void**)&tmpath);
 	return (data);

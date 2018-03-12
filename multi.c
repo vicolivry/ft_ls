@@ -6,11 +6,10 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/03/08 18:28:49 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/12 15:16:16 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/12 17:36:39 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
-
 
 #include "ft_ls.h"
 
@@ -53,7 +52,33 @@ static void	print_no_dir(t_data_ls *nodir, t_pars_ls strc)
 		}
 		ft_putchar_fd('\n', 2);
 	}
+}
 
+static void	multifile2(t_data_ls *nofile, t_data_ls *nodir, t_data_ls *multi,
+		t_pars_ls strc)
+{
+	t_data_ls	*tmp;
+
+	print_no_file(nofile, strc);
+	print_no_dir(nodir, strc);
+	if (multi->next)
+	{
+		strc.r ? rev_ascii_sort(multi) : ascii_sort(multi);
+		if (strc.t)
+			strc.r ? rev_time_sort(multi) : time_sort(multi);
+	}
+	tmp = multi;
+	while (tmp->next)
+	{
+		strc.rr ? ft_ls_r(tmp->name, strc) : ft_ls(tmp->name, strc);
+		maxlen(&strc, strc.data);
+		display(strc, strc.data);
+		tmp = tmp->next;
+	}
+	free_ls(strc.data);
+	free_ls(multi);
+	free_ls(nodir);
+	free_ls(nofile);
 }
 
 void		multifile(int ac, int j, const char **av, t_pars_ls strc)
@@ -67,7 +92,6 @@ void		multifile(int ac, int j, const char **av, t_pars_ls strc)
 	nofile = new_data_ls();
 	nodir = new_data_ls();
 	tmp = multi;
-
 	while (ac-- > j)
 	{
 		if (!check_exist(av[ac]))
@@ -83,26 +107,5 @@ void		multifile(int ac, int j, const char **av, t_pars_ls strc)
 			tmp = tmp->next;
 		}
 	}
-	print_no_file(nofile, strc);
-	print_no_dir(nodir, strc);
-	if (multi->next)
-	{
-		strc.r ? rev_ascii_sort(multi) : ascii_sort(multi);
-		if (strc.t)
-			strc.r ? rev_time_sort(multi) : time_sort(multi);
-	}
-	tmp = multi;
-	while (tmp->next)
-	{
-		strc.rr ? ft_ls_r(tmp->name, strc) : ft_ls(tmp->name, strc);
-		maxlen(&strc, strc.data);
-		display(strc, strc.data);
-//		strc.data = new_data_ls();
-		tmp = tmp->next;
-	}
-	free_ls(strc.data);
-	free_ls(multi);
-	free_ls(nodir);
-	free_ls(nofile);
+	multifile2(nofile, nodir, multi, strc);
 }
-

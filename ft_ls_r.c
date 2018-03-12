@@ -6,7 +6,7 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/12 16:09:30 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/12 16:57:03 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/12 18:41:51 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -31,37 +31,67 @@ static void	recurse(const char *file, t_data_ls *data)
 			: ft_strdup(str);
 		ft_memdel((void**)&str);
 		tmp = parse_data_ls(tmp);
-		if (tmp->dir->d_type == DT_DIR && !tmp->access)
-		{
-			tmp->oth_lst = new_data_ls();
-			str = ft_strjoin(tmp->path, tmp->name);
-			ft_memdel((void**)&tmp->path);
-			tmp->oth_lst->path = ft_strdup(str);
-			ft_memdel((void**)&str);
-			str = ft_strjoin(tmp->oth_lst->path, "/");
-			ft_memdel((void**)&tmp->oth_lst->path);
-			tmp->oth_lst->path = ft_strdup(str);
-			ft_memdel((void**)&str);
-			tmp->oth_lst->access = 0;
-			tmp->oth_lst->name = ft_strdup(tmp->name);
-		}
-		else if ((tmp->dir->d_type == DT_DIR || tmp->dir->d_type == 0) && tmp->access &&
-				ft_strcmp(tmp->name, ".") && ft_strcmp(tmp->name, ".."))
-		{
-			tmp->oth_lst = new_data_ls();
-			str = ft_strjoin(tmp->path, tmp->name);
-			recurse(str, tmp->oth_lst);
-			ft_memdel((void**)&str);
-
-		}
+		recurse2(tmp, str);
 		if (tmp->next == NULL)
 			tmp->next = new_data_ls();
 		tmp = tmp->next;
 	}
 	closedir(dirp);
+}
+
+void		recurse2(t_data_ls *tmp, char *str)
+{
+	if (tmp->dir->d_type == DT_DIR && !tmp->access)
+	{
+		tmp->oth_lst = new_data_ls();
+		str = ft_strjoin(tmp->path, tmp->name);
+		ft_memdel((void**)&tmp->path);
+		tmp->oth_lst->path = ft_strdup(str);
+		ft_memdel((void**)&str);
+		str = ft_strjoin(tmp->oth_lst->path, "/");
+		ft_memdel((void**)&tmp->oth_lst->path);
+		tmp->oth_lst->path = ft_strdup(str);
+		ft_memdel((void**)&str);
+		tmp->oth_lst->access = 0;
+		tmp->oth_lst->name = ft_strdup(tmp->name);
 	}
+	else if ((tmp->dir->d_type == DT_DIR || tmp->dir->d_type == 0) &&
+			tmp->access &&
+			ft_strcmp(tmp->name, ".") && ft_strcmp(tmp->name, ".."))
+	{
+		tmp->oth_lst = new_data_ls();
+		str = ft_strjoin(tmp->path, tmp->name);
+		recurse(str, tmp->oth_lst);
+		ft_memdel((void**)&str);
+	}
+}
 
-
+static void	ft_ls_r2(t_data_ls *tmp, char *str)
+{
+	if (tmp->dir->d_type == DT_DIR && !tmp->access)
+	{
+		tmp->oth_lst = new_data_ls();
+		str = ft_strjoin(tmp->path, tmp->name);
+		ft_memdel((void**)&tmp->path);
+		tmp->oth_lst->path = ft_strdup(str);
+		ft_memdel((void**)&str);
+		str = ft_strjoin(tmp->oth_lst->path, "/");
+		ft_memdel((void**)&tmp->oth_lst->path);
+		tmp->oth_lst->path = ft_strdup(str);
+		ft_memdel((void**)&str);
+		tmp->oth_lst->access = 0;
+		tmp->oth_lst->name = ft_strdup(tmp->name);
+	}
+	else if ((tmp->dir->d_type == DT_DIR || tmp->dir->d_type == 0) &&
+			tmp->access && ft_strcmp(tmp->name, ".")
+			&& ft_strcmp(tmp->name, ".."))
+	{
+		tmp->oth_lst = new_data_ls();
+		str = ft_strjoin(tmp->path, tmp->name);
+		recurse(str, tmp->oth_lst);
+		ft_memdel((void**)&str);
+	}
+}
 
 void		ft_ls_r(const char *file, t_pars_ls strc)
 {
@@ -71,7 +101,6 @@ void		ft_ls_r(const char *file, t_pars_ls strc)
 	char		*str;
 
 	tmp = strc.data;
-
 	dirp = opendir(file);
 	while ((dp = readdir(dirp)) != NULL)
 	{
@@ -81,28 +110,7 @@ void		ft_ls_r(const char *file, t_pars_ls strc)
 			: ft_strdup(str);
 		ft_memdel((void**)&str);
 		tmp = parse_data_ls(tmp);
-		if (tmp->dir->d_type == DT_DIR && !tmp->access)
-		{
-			tmp->oth_lst = new_data_ls();
-			str = ft_strjoin(tmp->path, tmp->name);
-			ft_memdel((void**)&tmp->path);
-			tmp->oth_lst->path = ft_strdup(str);
-			ft_memdel((void**)&str);
-			str = ft_strjoin(tmp->oth_lst->path, "/");
-			ft_memdel((void**)&tmp->oth_lst->path);
-			tmp->oth_lst->path = ft_strdup(str);
-			ft_memdel((void**)&str);
-			tmp->oth_lst->access = 0;
-			tmp->oth_lst->name = ft_strdup(tmp->name);
-		}
-		else if ((tmp->dir->d_type == DT_DIR || tmp->dir->d_type == 0) && tmp->access &&
-				ft_strcmp(tmp->name, ".") && ft_strcmp(tmp->name, ".."))
-		{
-			tmp->oth_lst = new_data_ls();
-			str = ft_strjoin(tmp->path, tmp->name);
-			recurse(str, tmp->oth_lst);
-			ft_memdel((void**)&str);
-		}
+		ft_ls_r2(tmp, str);
 		if (tmp->next == NULL)
 			tmp->next = new_data_ls();
 		tmp = tmp->next;

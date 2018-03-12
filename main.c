@@ -6,14 +6,14 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/07 15:36:04 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/12 13:24:36 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/12 17:42:05 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void	ft_ls(const char *file, t_pars_ls strc)
+void		ft_ls(const char *file, t_pars_ls strc)
 {
 	t_dir		*dp;
 	DIR			*dirp;
@@ -25,7 +25,6 @@ void	ft_ls(const char *file, t_pars_ls strc)
 	while ((dp = readdir(dirp)) != NULL)
 	{
 		tmp->dir = dp;
-		
 		str = ft_strjoin(file, "/");
 		tmp->path = ft_strdup(str);
 		ft_memdel((void**)&str);
@@ -37,7 +36,14 @@ void	ft_ls(const char *file, t_pars_ls strc)
 	closedir(dirp);
 }
 
-int		main(int ac, const char **av)
+static void	no_arg_ls(t_pars_ls strc)
+{
+	strc.rr ? ft_ls_r(".", strc) : ft_ls(".", strc);
+	display(strc, strc.data);
+	free_ls(strc.data);
+}
+
+int			main(int ac, const char **av)
 {
 	int			j;
 	t_pars_ls	strc;
@@ -45,11 +51,7 @@ int		main(int ac, const char **av)
 	j = 0;
 	strc = init_pars_ls();
 	if (ac == 1)
-	{
-		strc.rr ? ft_ls_r(".", strc) : ft_ls(".", strc);
-		display(strc, strc.data);
-		free_ls(strc.data);
-	}
+		no_arg_ls(strc);
 	else
 	{
 		while (av[++j] && av[j][0] == '-' && j <= ac)
