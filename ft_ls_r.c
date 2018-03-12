@@ -6,7 +6,7 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/12 16:09:30 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/09 16:55:03 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/12 16:57:03 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -45,7 +45,7 @@ static void	recurse(const char *file, t_data_ls *data)
 			tmp->oth_lst->access = 0;
 			tmp->oth_lst->name = ft_strdup(tmp->name);
 		}
-		else if (tmp->dir->d_type == DT_DIR && tmp->access &&
+		else if ((tmp->dir->d_type == DT_DIR || tmp->dir->d_type == 0) && tmp->access &&
 				ft_strcmp(tmp->name, ".") && ft_strcmp(tmp->name, ".."))
 		{
 			tmp->oth_lst = new_data_ls();
@@ -68,10 +68,8 @@ void		ft_ls_r(const char *file, t_pars_ls strc)
 	t_dir		*dp;
 	DIR			*dirp;
 	t_data_ls	*tmp;
-	int			i;
 	char		*str;
 
-	i = 0;
 	tmp = strc.data;
 
 	dirp = opendir(file);
@@ -97,7 +95,7 @@ void		ft_ls_r(const char *file, t_pars_ls strc)
 			tmp->oth_lst->access = 0;
 			tmp->oth_lst->name = ft_strdup(tmp->name);
 		}
-		else if (tmp->dir->d_type == DT_DIR && tmp->access &&
+		else if ((tmp->dir->d_type == DT_DIR || tmp->dir->d_type == 0) && tmp->access &&
 				ft_strcmp(tmp->name, ".") && ft_strcmp(tmp->name, ".."))
 		{
 			tmp->oth_lst = new_data_ls();

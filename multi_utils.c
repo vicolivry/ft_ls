@@ -6,7 +6,7 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/21 11:51:13 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/08 18:41:56 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/12 12:05:11 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -34,17 +34,11 @@ int			check_exist(const char *str)
 
 int			check_dir(const char *str)
 {
-	DIR		*dirp;
-	t_dir	*dp;
 	int		ret;
+	t_st	st;
 
-	ret = 0;
-	if ((dirp = opendir(str)) != NULL)
-	{
-		if ((dp = readdir(dirp)) != NULL)
-			ret = dp->d_type == DT_DIR ? 1 : 0;
-		closedir(dirp);
-	}
+	lstat(str, &st);
+	ret = S_ISDIR(st.st_mode) ? 1 : 0;
 	return (ret);
 }
 

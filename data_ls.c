@@ -6,7 +6,7 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/07 18:31:51 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/09 19:19:28 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/12 16:52:12 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -54,7 +54,7 @@ char	*fill_link(char *path, t_st st)
 	ret = ft_strdup("-> ");
 	if ((str = malloc(st.st_size + 1)) == NULL)
 		return (NULL);
-	eof = readlink((const char*)path, str, st.st_size);
+	eof = readlink((const char*)path, str, st.st_size + 10);
 	while (str[i++])
 	{
 		if (str[i] == ' ' || str[i] == '\n')
@@ -69,24 +69,6 @@ char	*fill_link(char *path, t_st st)
 	return (ret);
 }
 
-static int	get_major(dev_t st_rdev)
-{
-	unsigned int major;
-
-	major = major(st_rdev >> 8);
-	return (major);
-}
-
-static int	get_minor(dev_t st_rdev)
-{
-	int minor;
-
-	minor  = st_rdev & 0xFF;
-	return (minor);
-}
-
-
-
 t_data_ls	*parse_data_ls(t_data_ls *data)
 {
 	t_st		st;
@@ -97,7 +79,7 @@ t_data_ls	*parse_data_ls(t_data_ls *data)
 	data->name = ft_strdup(data->dir->d_name);
 	tmpath = ft_strjoin(data->path, data->name);
 	lstat(tmpath, &st);
-	if (data->dir->d_type == DT_DIR)
+	if (S_ISDIR(st.st_mode) || data->dir->d_type == 0)
 		data->access = check_permission(tmpath);
 	data->len = ft_strlen(data->name);
 	data->chmod = chmod_ls(st);
@@ -109,15 +91,14 @@ t_data_ls	*parse_data_ls(t_data_ls *data)
 	data->nlnk = st.st_nlink;
 	data->size = st.st_size;
 	data->time = st.st_mtime;
-	if (data->chmod[0] == 'b' || data->chmod[0] == 'c')
-	{
-//		ft_printf("st_rdev = %x\n", st.st_rdev);
-		data->minor = get_minor(st.st_rdev);
-		data->major = get_major(st.st_rdev);
-//		ft_printf("major: %d, minor: %d\n", data->major, data->minor);
-	}
-	data->link = data->chmod[0] == 'l' ? fill_link(tmpath, st) : data->link;
+
+	data->link = S_ISLNK(st.st_mode) ? fill_link(tmpath, st) : data->link;
 	data->date = time_ls(data->time);
+	if (S_ISCHR(st.st_mode)|| S_ISBLK(st.st_mode))
+	{
+		data->minor = st.st_rdev & 0xffffff;
+		data->major = (st.st_rdev >> 24) & 0xff;
+	}
 	data->next = NULL;
 	ft_memdel((void**)&tmpath);
 	return (data);

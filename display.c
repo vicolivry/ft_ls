@@ -6,7 +6,7 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/03/06 13:38:59 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/09 18:58:47 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/12 14:20:52 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -47,8 +47,12 @@ static void	print_flag_a(t_pars_ls strc, t_data_ls *data)
 static void	print_noflag(t_pars_ls strc, t_data_ls *data)
 {
 	t_data_ls	*tmp;
+	static int	rc = 0;
 
 	tmp = data;
+	if (rc)
+		ft_putstr("\n");
+	rc = 1;
 	strc.r ? rev_ascii_sort(tmp) : ascii_sort(tmp);
 	if (strc.t)
 		strc.r ? rev_time_sort(tmp) : time_sort(tmp);
@@ -68,9 +72,9 @@ static void	print_noflag(t_pars_ls strc, t_data_ls *data)
 		{
 			if (strc.l)
 			{
-				ft_printf("%s %*d %*s  %*s ", tmp->chmod, strc.len.nlnk, 
+				ft_printf("%s %*d %-*s  %-*s ", tmp->chmod, strc.len.nlnk, 
 						tmp->nlnk, strc.len.pwd, tmp->pwd, strc.len.gp, tmp->gp);
-				if (tmp->chmod[0] == 'b' || tmp->chmod[0] == 'c')
+	if (tmp->chmod[0] == 'b' || tmp->chmod[0] == 'c')
 					ft_printf("%d, %d ", tmp->major, tmp->minor);
 				else
 					ft_printf("%*d ", strc.len.size, tmp->size);
@@ -85,17 +89,18 @@ static void	print_noflag(t_pars_ls strc, t_data_ls *data)
 		}
 		tmp = tmp->next;
 	}
-	ft_putchar('\n');
 	tmp = data;
 	while (tmp)
 	{
 		if (!tmp->access && tmp->oth_lst && strc.rr)
 		{
 			tmp->oth_lst->path[ft_strlen(tmp->oth_lst->path) - 1] = ':';
+			ft_putchar_fd('\n', 2);
 			ft_printf("%s\n", tmp->oth_lst->path);
 			ft_putstr_fd("ft_ls: ", 2);
 			ft_putstr_fd(tmp->oth_lst->name, 2);
 			ft_putstr_fd(": Permission denied\n", 2);
+			free_ls(tmp->oth_lst);
 		}
 		if (tmp->access && tmp->oth_lst && tmp->name[0] != '.')
 			print_noflag(strc, tmp->oth_lst);

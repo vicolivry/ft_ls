@@ -6,7 +6,7 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/07 15:21:13 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/09 18:07:54 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/12 14:27:50 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -52,7 +52,6 @@ typedef struct			s_data_ls
 	char				*name;
 	char				*path;
 	struct dirent		*dir;
-	struct stat			stat;
 	int					nlnk;
 	char				*chmod;
 	char				*pwd;

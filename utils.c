@@ -6,14 +6,14 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/16 13:12:41 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/09 15:34:20 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/12 17:10:50 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void		maxlen(t_pars_ls *strc, t_data_ls *data)
+void	maxlen(t_pars_ls *strc, t_data_ls *data)
 {
 	t_data_ls	*tmp;
 

@@ -6,7 +6,7 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/18 13:10:23 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/08 14:31:15 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/12 14:28:15 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -22,7 +22,6 @@ static t_data_ls	*new_swap(t_data_ls *lst1)
 	tmp->name = lst1->name;
 	tmp->path = lst1->path;
 	tmp->dir = lst1->dir;
-	tmp->stat = lst1->stat;
 	tmp->access = lst1->access;
 	tmp->nlnk = lst1->nlnk;
 	tmp->chmod = lst1->chmod;
@@ -34,6 +33,8 @@ static t_data_ls	*new_swap(t_data_ls *lst1)
 	tmp->len = lst1->len;
 	tmp->blck = lst1->blck;
 	tmp->oth_lst = lst1->oth_lst;
+	tmp->minor = lst1->minor;
+	tmp->major = lst1->major;
 	return (tmp);
 }
 
@@ -46,7 +47,6 @@ void				swap_lst(t_data_ls **lst1, t_data_ls **lst2)
 	(*lst1)->link = (*lst2)->link;
 	(*lst1)->path = (*lst2)->path;
 	(*lst1)->dir = (*lst2)->dir;
-	(*lst1)->stat = (*lst2)->stat;
 	(*lst1)->nlnk = (*lst2)->nlnk;
 	(*lst1)->access = (*lst2)->access;
 	(*lst1)->chmod = (*lst2)->chmod;
@@ -58,10 +58,11 @@ void				swap_lst(t_data_ls **lst1, t_data_ls **lst2)
 	(*lst1)->len = (*lst2)->len;
 	(*lst1)->blck = (*lst2)->blck;
 	(*lst1)->oth_lst = (*lst2)->oth_lst;
+	(*lst1)->minor = (*lst2)->minor;
+	(*lst1)->major = (*lst2)->major;
 	(*lst2)->name = tmp->name;
 	(*lst2)->path = tmp->path;
 	(*lst2)->dir = tmp->dir;
-	(*lst2)->stat = tmp->stat;
 	(*lst2)->nlnk = tmp->nlnk;
 	(*lst2)->chmod = tmp->chmod;
 	(*lst2)->pwd = tmp->pwd;
@@ -74,6 +75,9 @@ void				swap_lst(t_data_ls **lst1, t_data_ls **lst2)
 	(*lst2)->blck = tmp->blck;
 	(*lst2)->access = tmp->access;
 	(*lst2)->oth_lst = tmp->oth_lst;
+	(*lst2)->minor = tmp->minor;
+	(*lst2)->major = tmp->major;
+
 	free(tmp);
 }
 

@@ -6,7 +6,7 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/03/08 18:28:49 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/09 18:59:00 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/12 15:16:16 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -63,7 +63,6 @@ void		multifile(int ac, int j, const char **av, t_pars_ls strc)
 	t_data_ls	*nofile;
 	t_data_ls	*nodir;
 
-
 	multi = new_data_ls();
 	nofile = new_data_ls();
 	nodir = new_data_ls();
@@ -98,9 +97,12 @@ void		multifile(int ac, int j, const char **av, t_pars_ls strc)
 		strc.rr ? ft_ls_r(tmp->name, strc) : ft_ls(tmp->name, strc);
 		maxlen(&strc, strc.data);
 		display(strc, strc.data);
-	//	free_ls(strc.data);
-		strc.data = new_data_ls();
+//		strc.data = new_data_ls();
 		tmp = tmp->next;
 	}
+	free_ls(strc.data);
+	free_ls(multi);
+	free_ls(nodir);
+	free_ls(nofile);
 }
 
