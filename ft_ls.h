@@ -6,7 +6,7 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/07 15:21:13 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/12 18:55:09 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/13 19:14:44 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -24,7 +24,7 @@
 # include <time.h>
 # include <errno.h>
 
-# define FLAGS_LS "-Ralrt"
+# define FLAGS_LS "-Raglrtu"
 
 typedef struct			s_len_ls
 {
@@ -33,15 +33,19 @@ typedef struct			s_len_ls
 	int					gp;
 	int					size;
 	int					name;
+	int					maj;
+	int					min;
 }						t_len_ls;
 
 typedef struct			s_pars_ls
 {
+	int					u;
 	int					l;
 	int					r;
 	int					rr;
 	int					a;
 	int					t;
+	int					g;
 	int					total_bck;
 	t_len_ls			len;
 	struct s_data_ls	*data;
@@ -78,7 +82,7 @@ typedef struct group	t_gp;
 int						s_fmt(const char *file, t_pars_ls strc);
 int						l_fmt(const char *file, t_pars_ls strc);
 t_data_ls				*new_data_ls(void);
-t_data_ls				*parse_data_ls(t_data_ls *data);
+t_data_ls				*parse_data_ls(t_data_ls *data, t_pars_ls strc);
 int						parse_ls(t_pars_ls *pars, const char *str);
 t_pars_ls				init_pars_ls(void);
 void					ft_ls(const char *file, t_pars_ls strc);
@@ -101,7 +105,7 @@ int						check_exist(const char *str);
 int						check_dir(const char *str);
 t_data_ls				*no_such_file(const char *str, t_data_ls *data);
 t_data_ls				*no_dir(const char *str, t_data_ls *data);
-void					recurse2(t_data_ls *tmp, char *str);
+void					recurse2(t_data_ls *tmp, char *str, t_pars_ls strc);
 void					print_flag_a(t_pars_ls strc, t_data_ls *data);
 void					print_noflag(t_pars_ls strc, t_data_ls *data);
 void					multifile(int ac, int j, const char **av,

@@ -6,7 +6,7 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/07 15:56:20 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/12 17:36:54 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/13 18:08:28 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -22,6 +22,8 @@ static t_len_ls	init_len(void)
 	len.gp = 0;
 	len.size = 0;
 	len.name = 0;
+	len.min = 0;
+	len.maj = 0;
 	return (len);
 }
 
@@ -29,6 +31,7 @@ t_pars_ls		init_pars_ls(void)
 {
 	t_pars_ls	pars;
 
+	pars.u = 0;
 	pars.l = 0;
 	pars.r = 0;
 	pars.rr = 0;
@@ -59,6 +62,9 @@ int				parse_ls(t_pars_ls *pars, const char *str)
 			pars->rr = ft_strchr(str, 'R') ? 1 : pars->rr;
 			pars->a = ft_strchr(str, 'a') ? 1 : pars->a;
 			pars->t = ft_strchr(str, 't') ? 1 : pars->t;
+			pars->u = ft_strchr(str, 'u') ? 1 : pars->u;
+			pars->g = ft_strchr(str, 'g') ? 1 : pars->g;
+			pars->l = ft_strchr(str, 'g') ? 1 : pars->l;
 		}
 		i++;
 	}

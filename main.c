@@ -6,7 +6,7 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/07 15:36:04 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/12 17:42:05 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/13 17:59:19 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -28,7 +28,7 @@ void		ft_ls(const char *file, t_pars_ls strc)
 		str = ft_strjoin(file, "/");
 		tmp->path = ft_strdup(str);
 		ft_memdel((void**)&str);
-		tmp = parse_data_ls(tmp);
+		tmp = parse_data_ls(tmp, strc);
 		if (tmp->next == NULL)
 			tmp->next = new_data_ls();
 		tmp = tmp->next;
@@ -54,7 +54,7 @@ int			main(int ac, const char **av)
 		no_arg_ls(strc);
 	else
 	{
-		while (av[++j] && av[j][0] == '-' && j <= ac)
+		while (av[++j] && av[j][0] == '-'  && av[j][1] && j <= ac)
 			if (!(parse_ls(&strc, av[j])))
 				return (-1);
 		if (j == ac)

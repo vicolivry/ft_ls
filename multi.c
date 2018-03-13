@@ -6,7 +6,7 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/03/08 18:28:49 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/12 17:36:39 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/13 18:44:24 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -50,7 +50,7 @@ static void	print_no_dir(t_data_ls *nodir, t_pars_ls strc)
 				ft_printf("%s\n", nodir->name);
 			nodir = nodir->next;
 		}
-		ft_putchar_fd('\n', 2);
+		ft_putchar('\n');
 	}
 }
 
@@ -72,8 +72,13 @@ static void	multifile2(t_data_ls *nofile, t_data_ls *nodir, t_data_ls *multi,
 	{
 		strc.rr ? ft_ls_r(tmp->name, strc) : ft_ls(tmp->name, strc);
 		maxlen(&strc, strc.data);
-		display(strc, strc.data);
+		if (check_permission(tmp->name))
+		{
+			display(strc, strc.data);
+			free_ls(strc.data);
+		}
 		tmp = tmp->next;
+		strc.data = new_data_ls();
 	}
 	free_ls(strc.data);
 	free_ls(multi);

@@ -6,14 +6,25 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/16 13:12:41 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/12 17:10:50 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/12 19:16:50 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void	maxlen(t_pars_ls *strc, t_data_ls *data)
+static void	min_maj_ls(t_pars_ls *strc, t_data_ls *tmp)
+{
+	if (tmp->minor || tmp->major)
+	{
+		strc->len.min = ft_nb_len(tmp->minor) > strc->len.min ?
+			ft_nb_len(tmp->minor) : strc->len.min;
+		strc->len.maj = ft_nb_len(tmp->major) > strc->len.maj ?
+			ft_nb_len(tmp->major) : strc->len.maj;
+	}
+}
+
+void		maxlen(t_pars_ls *strc, t_data_ls *data)
 {
 	t_data_ls	*tmp;
 
@@ -24,13 +35,13 @@ void	maxlen(t_pars_ls *strc, t_data_ls *data)
 			ft_strlen(tmp->name) : strc->len.name;
 		strc->len.nlnk = ft_nb_len(tmp->nlnk) > strc->len.nlnk ?
 			ft_nb_len(tmp->nlnk) : strc->len.nlnk;
-		if (tmp->pwd)
-			strc->len.pwd = ft_strlen(tmp->pwd) > strc->len.pwd ?
+		strc->len.pwd = ft_strlen(tmp->pwd) > strc->len.pwd ?
 			ft_strlen(tmp->pwd) : strc->len.pwd;
 		strc->len.gp = ft_strlen(tmp->gp) > strc->len.gp ? ft_strlen(tmp->gp)
 			: strc->len.gp;
 		strc->len.size = ft_nb_len(tmp->size) > strc->len.size ?
 			ft_nb_len(tmp->size) : strc->len.size;
+		min_maj_ls(strc, tmp);
 		tmp = tmp->next;
 	}
 	tmp = data;
@@ -42,7 +53,7 @@ void	maxlen(t_pars_ls *strc, t_data_ls *data)
 	}
 }
 
-int		check_permission(char *str)
+int			check_permission(char *str)
 {
 	DIR	*dirp;
 
@@ -54,7 +65,7 @@ int		check_permission(char *str)
 	return (0);
 }
 
-int		total_bck(t_data_ls *data)
+int			total_bck(t_data_ls *data)
 {
 	t_data_ls	*tmp;
 	int			total;

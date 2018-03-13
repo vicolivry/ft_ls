@@ -6,7 +6,7 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/07 18:31:51 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/12 17:22:39 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/13 19:23:48 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -46,15 +46,15 @@ char		*fill_link(char *path, t_st st)
 {
 	char	*str;
 	char	*ret;
-	int		eof;
+	unsigned int		eof;
 	char	*tmp;
 	int		i;
 
 	i = -1;
 	ret = ft_strdup("-> ");
-	if ((str = malloc(st.st_size + 1)) == NULL)
+	if ((str = malloc(st.st_size)) == NULL)
 		return (NULL);
-	eof = readlink((const char*)path, str, st.st_size + 10);
+	eof = readlink((const char*)path, str, st.st_size + 4);
 	while (str[i++])
 	{
 		if (str[i] == ' ' || str[i] == '\n')
@@ -75,15 +75,15 @@ static void	min_maj_ls(t_data_ls **data, t_st st)
 	(*data)->major = (st.st_rdev >> 24) & 0xff;
 }
 
-static void	parse_data_2(t_data_ls **data, t_st st)
+static void	parse_data_2(t_data_ls **data, t_st st, t_pars_ls strc)
 {
 	(*data)->blck = st.st_blocks;
 	(*data)->nlnk = st.st_nlink;
 	(*data)->size = st.st_size;
-	(*data)->time = st.st_mtime;
+	(*data)->time = strc.u ? st.st_atime : st.st_mtime;
 }
 
-t_data_ls	*parse_data_ls(t_data_ls *data)
+t_data_ls	*parse_data_ls(t_data_ls *data, t_pars_ls strc)
 {
 	t_st		st;
 	t_passwd	*pswd;
@@ -101,7 +101,7 @@ t_data_ls	*parse_data_ls(t_data_ls *data)
 	grp = getgrgid(st.st_gid);
 	data->gp = grp ? ft_strdup(grp->gr_name) : ft_itoa(st.st_gid);
 	data->pwd = pswd ? ft_strdup(pswd->pw_name) : ft_itoa(st.st_uid);
-	parse_data_2(&data, st);
+	parse_data_2(&data, st, strc);
 	data->link = S_ISLNK(st.st_mode) ? fill_link(tmpath, st) : data->link;
 	data->date = time_ls(data->time);
 	if (S_ISCHR(st.st_mode) || S_ISBLK(st.st_mode))
