@@ -6,12 +6,26 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/07 15:36:04 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/14 11:50:30 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/14 18:18:38 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
+
+static void	ft_ls2(const char *file, int i, t_data_ls *tmp)
+{
+	if (i)
+	{
+		ft_putchar('\n');
+		ft_printf("%s:\n", file);
+	}
+	ft_putstr_fd("ft_ls: ", 2);
+	if (file[ft_strlen(file) - 1] != '/')
+		ft_putstr_fd(file, 2);
+	ft_putstr_fd(": Permission denied\n", 2);
+	tmp->next = NULL;
+}
 
 void		ft_ls(const char *file, t_pars_ls *strc)
 {
@@ -24,33 +38,22 @@ void		ft_ls(const char *file, t_pars_ls *strc)
 	tmp = strc->data;
 	if ((dirp = opendir(file)) != NULL)
 	{
-	while ((dp = readdir(dirp)) != NULL)
-	{
-		tmp->dir = dp;
-		str = ft_strjoin(file, "/");
-		tmp->path = ft_strdup(str);
-		ft_memdel((void**)&str);
-		tmp = parse_data_ls(tmp, *strc);
-		maxlen(strc, tmp);
-		if (tmp->next == NULL)
-			tmp->next = new_data_ls();
-		tmp = tmp->next;
-	}
-	closedir(dirp);
+		while ((dp = readdir(dirp)) != NULL)
+		{
+			tmp->dir = dp;
+			str = ft_strjoin(file, "/");
+			tmp->path = ft_strdup(str);
+			ft_memdel((void**)&str);
+			tmp = parse_data_ls(tmp, *strc);
+			maxlen(strc, tmp);
+			if (tmp->next == NULL)
+				tmp->next = new_data_ls();
+			tmp = tmp->next;
+		}
+		closedir(dirp);
 	}
 	else
-	{
-		if (i)
-		{
-			ft_putchar('\n');
-			ft_printf("%s:\n", file);
-		}
-		ft_putstr_fd("ft_ls: ", 2);
-		if (file[ft_strlen(file) - 1] != '/')
-			ft_putstr_fd(file, 2);
-		ft_putstr_fd(": Permission denied\n", 2);
-		tmp->next = NULL;
-	}
+		ft_ls2(file, i, tmp);
 	i = 1;
 }
 
@@ -72,7 +75,7 @@ int			main(int ac, const char **av)
 		no_arg_ls(strc);
 	else
 	{
-		while (av[++j] && av[j][0] == '-'  && av[j][1] && j <= ac)
+		while (av[++j] && av[j][0] == '-' && av[j][1] && j <= ac)
 			if (!(parse_ls(&strc, av[j])))
 				return (-1);
 		if (j == ac)

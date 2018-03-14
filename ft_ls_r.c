@@ -6,7 +6,7 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/12 16:09:30 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/14 11:54:04 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/14 18:19:00 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -94,6 +94,20 @@ static void	ft_ls_r2(t_data_ls *tmp, char *str, t_pars_ls *strc)
 	}
 }
 
+static void	ft_ls_r3(const char *file, int i, t_data_ls *tmp)
+{
+	if (i)
+	{
+		ft_putchar('\n');
+		ft_printf("%s:\n", file);
+	}
+	ft_putstr_fd("ft_ls: ", 2);
+	if (file[ft_strlen(file) - 1] != '/')
+		ft_putstr_fd(file, 2);
+	ft_putstr_fd(": Permission denied\n", 2);
+	tmp->next = NULL;
+}
+
 void		ft_ls_r(const char *file, t_pars_ls *strc)
 {
 	static int	i = 0;
@@ -122,17 +136,6 @@ void		ft_ls_r(const char *file, t_pars_ls *strc)
 		closedir(dirp);
 	}
 	else
-	{
-		if (i)
-		{
-			ft_putchar('\n');
-			ft_printf("%s:\n", file);
-		}
-		ft_putstr_fd("ft_ls: ", 2);
-		if (file[ft_strlen(file) - 1] != '/')
-			ft_putstr_fd(file, 2);
-		ft_putstr_fd(": Permission denied\n", 2);
-		tmp->next = NULL;
-	}
+		ft_ls_r3(file, i, tmp);
 	i = 1;
 }

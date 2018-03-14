@@ -6,7 +6,7 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/07 15:21:13 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/14 14:04:19 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/14 17:19:30 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -109,6 +109,7 @@ t_data_ls				*no_dir(const char *str, t_data_ls *data);
 void					recurse2(t_data_ls *tmp, char *str, t_pars_ls *strc);
 void					print_flag_a(t_pars_ls strc, t_data_ls *data);
 void					print_noflag(t_pars_ls strc, t_data_ls *data);
+t_len_ls				init_len(void);
 void					multifile(int ac, int j, const char **av,
 						t_pars_ls strc);
 #endif

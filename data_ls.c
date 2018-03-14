@@ -6,7 +6,7 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/07 18:31:51 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/14 14:04:23 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/14 17:58:25 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -47,7 +47,7 @@ char		*fill_link(char *path, t_st st)
 {
 	char	*str;
 	char	*ret;
-	unsigned int		eof;
+	int		eof;
 	char	*tmp;
 	int		i;
 
@@ -57,13 +57,11 @@ char		*fill_link(char *path, t_st st)
 		return (NULL);
 	if (st.st_size)
 		eof = readlink((const char*)path, str, st.st_size);
-	else	
+	else
 		eof = readlink((const char*)path, str, 4);
 	while (str[i++])
-	{
 		if (str[i] == ' ' || str[i] == '\n')
 			str[i] = '\0';
-	}
 	str[eof] = '\0';
 	tmp = ft_strjoin(ret, str);
 	ft_memdel((void**)&ret);

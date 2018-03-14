@@ -6,7 +6,7 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/16 13:12:41 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/14 13:46:26 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/14 18:09:23 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -29,18 +29,18 @@ void		maxlen(t_pars_ls *strc, t_data_ls *data)
 	t_data_ls	*tmp;
 
 	tmp = data;
-		strc->len.name = ft_strlen(tmp->name) > strc->len.name ?
-			ft_strlen(tmp->name) : strc->len.name;
-		strc->len.nlnk = ft_nb_len(tmp->nlnk) > strc->len.nlnk ?
-			ft_nb_len(tmp->nlnk) : strc->len.nlnk;
-		strc->len.pwd = ft_strlen(tmp->pwd) > strc->len.pwd ?
-			ft_strlen(tmp->pwd) : strc->len.pwd;
-		strc->len.gp = ft_strlen(tmp->gp) > strc->len.gp ? ft_strlen(tmp->gp)
-			: strc->len.gp;
-		strc->len.size = ft_nb_len(tmp->size) > strc->len.size ?
-			ft_nb_len(tmp->size) : strc->len.size;
-		min_maj_ls(strc, tmp);
-		tmp = tmp->next;
+	strc->len.name = ft_strlen(tmp->name) > strc->len.name ?
+		ft_strlen(tmp->name) : strc->len.name;
+	strc->len.nlnk = ft_nb_len(tmp->nlnk) > strc->len.nlnk ?
+		ft_nb_len(tmp->nlnk) : strc->len.nlnk;
+	strc->len.pwd = ft_strlen(tmp->pwd) > strc->len.pwd ?
+		ft_strlen(tmp->pwd) : strc->len.pwd;
+	strc->len.gp = ft_strlen(tmp->gp) > strc->len.gp ? ft_strlen(tmp->gp)
+		: strc->len.gp;
+	strc->len.size = ft_nb_len(tmp->size) > strc->len.size ?
+		ft_nb_len(tmp->size) : strc->len.size;
+	min_maj_ls(strc, tmp);
+	tmp = tmp->next;
 }
 
 int			check_permission(char *str)

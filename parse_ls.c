@@ -6,14 +6,14 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/07 15:56:20 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/13 18:08:28 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/14 18:04:15 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-static t_len_ls	init_len(void)
+t_len_ls		init_len(void)
 {
 	t_len_ls	len;
 

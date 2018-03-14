@@ -6,7 +6,7 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/03/06 13:38:59 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/14 14:40:22 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/14 17:37:42 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -24,7 +24,7 @@ static void	print_noflag2(t_pars_ls strc, t_data_ls *tmp)
 				ft_printf("%s %*d ", tmp->chmod, strc.len.nlnk,
 						tmp->nlnk);
 				if (!strc.g)
-					ft_printf("%-*s  ", strc.len.pwd, tmp->pwd);
+					ft_printf("%-*s ", strc.len.pwd, tmp->pwd);
 				ft_printf("%-*s ", strc.len.gp, tmp->gp);
 				if (tmp->chmod[0] == 'b' || tmp->chmod[0] == 'c')
 					ft_printf("%*d, %*d ", strc.len.maj, tmp->major,
@@ -44,7 +44,7 @@ static void	print_noflag2(t_pars_ls strc, t_data_ls *tmp)
 
 static void	print_noflag3(t_pars_ls strc, t_data_ls *tmp)
 {
-	while (tmp)
+	while (tmp->next)
 	{
 		if (!tmp->access && tmp->oth_lst && strc.rr)
 		{
@@ -70,18 +70,19 @@ void		print_noflag(t_pars_ls strc, t_data_ls *data)
 	tmp = data;
 	if (rc)
 		ft_putstr("\n");
-	rc = 1;
 	if (tmp->access)
 		tmp->empty = tmp->next->next->next ? 0 : 1;
 	if (tmp->access)
 		strc.r ? rev_ascii_sort(tmp) : ascii_sort(tmp);
 	if (tmp->access && strc.t)
 		strc.r ? rev_time_sort(tmp) : time_sort(tmp);
-	if (tmp->path && ft_strcmp(tmp->path, "./") && ft_strcmp(tmp->name, "../"))
+	if (rc && tmp->path && ft_strcmp(tmp->path, "./") &&
+			ft_strcmp(tmp->name, "../"))
 	{
 		tmp->path[ft_strlen(tmp->path) - 1] = ':';
 		ft_printf("%s\n", tmp->path);
 	}
+	rc = 1;
 	if (strc.l && !tmp->empty)
 		ft_printf("total %d\n", total_bck(tmp));
 	print_noflag2(strc, tmp);
