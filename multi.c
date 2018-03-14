@@ -6,7 +6,7 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/03/08 18:28:49 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/13 18:44:24 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/14 13:31:05 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -70,8 +70,7 @@ static void	multifile2(t_data_ls *nofile, t_data_ls *nodir, t_data_ls *multi,
 	tmp = multi;
 	while (tmp->next)
 	{
-		strc.rr ? ft_ls_r(tmp->name, strc) : ft_ls(tmp->name, strc);
-		maxlen(&strc, strc.data);
+		strc.rr ? ft_ls_r(tmp->name, &strc) : ft_ls(tmp->name, &strc);
 		if (check_permission(tmp->name))
 		{
 			display(strc, strc.data);

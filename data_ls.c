@@ -6,7 +6,7 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/07 18:31:51 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/13 19:23:48 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/14 14:04:23 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -38,6 +38,7 @@ t_data_ls	*new_data_ls(void)
 	new->time = 0;
 	new->minor = 0;
 	new->major = 0;
+	new->empty = 0;
 	new->link = NULL;
 	return (new);
 }
@@ -52,9 +53,12 @@ char		*fill_link(char *path, t_st st)
 
 	i = -1;
 	ret = ft_strdup("-> ");
-	if ((str = malloc(st.st_size)) == NULL)
+	if ((str = malloc(st.st_size + 1)) == NULL)
 		return (NULL);
-	eof = readlink((const char*)path, str, st.st_size + 4);
+	if (st.st_size)
+		eof = readlink((const char*)path, str, st.st_size);
+	else	
+		eof = readlink((const char*)path, str, 4);
 	while (str[i++])
 	{
 		if (str[i] == ' ' || str[i] == '\n')

@@ -6,7 +6,7 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/07 15:21:13 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/13 19:14:44 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/14 14:04:19 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -70,6 +70,7 @@ typedef struct			s_data_ls
 	int					error;
 	int					minor;
 	int					major;
+	int					empty;
 	struct s_data_ls	*oth_lst;
 	struct s_data_ls	*next;
 }						t_data_ls;
@@ -85,10 +86,10 @@ t_data_ls				*new_data_ls(void);
 t_data_ls				*parse_data_ls(t_data_ls *data, t_pars_ls strc);
 int						parse_ls(t_pars_ls *pars, const char *str);
 t_pars_ls				init_pars_ls(void);
-void					ft_ls(const char *file, t_pars_ls strc);
+void					ft_ls(const char *file, t_pars_ls *strc);
 char					*chmod_ls(t_st stat);
 char					*time_ls(time_t date);
-void					ft_ls_r(const char *file, t_pars_ls strc);
+void					ft_ls_r(const char *file, t_pars_ls *strc);
 void					maxlen(t_pars_ls *strc, t_data_ls *data);
 int						check_permission(char *str);
 int						total_bck(t_data_ls *data);
@@ -105,7 +106,7 @@ int						check_exist(const char *str);
 int						check_dir(const char *str);
 t_data_ls				*no_such_file(const char *str, t_data_ls *data);
 t_data_ls				*no_dir(const char *str, t_data_ls *data);
-void					recurse2(t_data_ls *tmp, char *str, t_pars_ls strc);
+void					recurse2(t_data_ls *tmp, char *str, t_pars_ls *strc);
 void					print_flag_a(t_pars_ls strc, t_data_ls *data);
 void					print_noflag(t_pars_ls strc, t_data_ls *data);
 void					multifile(int ac, int j, const char **av,

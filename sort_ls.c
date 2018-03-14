@@ -6,7 +6,7 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/18 13:10:23 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/12 18:12:05 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/14 14:40:26 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -35,6 +35,7 @@ static t_data_ls	*new_swap(t_data_ls *lst1)
 	tmp->oth_lst = lst1->oth_lst;
 	tmp->minor = lst1->minor;
 	tmp->major = lst1->major;
+	tmp->empty = lst1->empty;
 	return (tmp);
 }
 
@@ -57,6 +58,7 @@ static void			swap_lst2(t_data_ls **lst2, t_data_ls **tmp)
 	(*lst2)->oth_lst = (*tmp)->oth_lst;
 	(*lst2)->minor = (*tmp)->minor;
 	(*lst2)->major = (*tmp)->major;
+	(*lst2)->empty = (*tmp)->empty;
 }
 
 void				swap_lst(t_data_ls **lst1, t_data_ls **lst2)
@@ -81,6 +83,7 @@ void				swap_lst(t_data_ls **lst1, t_data_ls **lst2)
 	(*lst1)->oth_lst = (*lst2)->oth_lst;
 	(*lst1)->minor = (*lst2)->minor;
 	(*lst1)->major = (*lst2)->major;
+	(*lst1)->empty = (*lst2)->empty;
 	swap_lst2(lst2, &tmp);
 	free(tmp);
 }

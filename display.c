@@ -6,7 +6,7 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/03/06 13:38:59 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/13 18:44:42 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/14 14:40:22 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -22,7 +22,7 @@ static void	print_noflag2(t_pars_ls strc, t_data_ls *tmp)
 			if (strc.l)
 			{
 				ft_printf("%s %*d ", tmp->chmod, strc.len.nlnk,
-					tmp->nlnk);
+						tmp->nlnk);
 				if (!strc.g)
 					ft_printf("%-*s  ", strc.len.pwd, tmp->pwd);
 				ft_printf("%-*s ", strc.len.gp, tmp->gp);
@@ -33,10 +33,7 @@ static void	print_noflag2(t_pars_ls strc, t_data_ls *tmp)
 					ft_printf("%*d ", strc.len.min ? strc.len.min +
 							strc.len.maj + 2 : strc.len.size, tmp->size);
 				ft_printf(" %s %s", tmp->date, tmp->name);
-				if (tmp->link)
-					ft_printf(" %s\n", tmp->link);
-				else
-					ft_putchar('\n');
+				tmp->link ? ft_printf(" %s\n", tmp->link) : ft_putchar('\n');
 			}
 			else
 				ft_printf("%s\n", tmp->name);
@@ -75,16 +72,18 @@ void		print_noflag(t_pars_ls strc, t_data_ls *data)
 		ft_putstr("\n");
 	rc = 1;
 	if (tmp->access)
+		tmp->empty = tmp->next->next->next ? 0 : 1;
+	if (tmp->access)
 		strc.r ? rev_ascii_sort(tmp) : ascii_sort(tmp);
-	if (strc.t)
+	if (tmp->access && strc.t)
 		strc.r ? rev_time_sort(tmp) : time_sort(tmp);
 	if (tmp->path && ft_strcmp(tmp->path, "./") && ft_strcmp(tmp->name, "../"))
 	{
 		tmp->path[ft_strlen(tmp->path) - 1] = ':';
 		ft_printf("%s\n", tmp->path);
 	}
-	if (strc.l && tmp->access && tmp->next->next)
-			ft_printf("total %d\n", total_bck(tmp));
+	if (strc.l && !tmp->empty)
+		ft_printf("total %d\n", total_bck(tmp));
 	print_noflag2(strc, tmp);
 	tmp = data;
 	print_noflag3(strc, tmp);
