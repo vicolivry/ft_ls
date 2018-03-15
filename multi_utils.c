@@ -6,7 +6,7 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/21 11:51:13 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/13 19:14:56 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/15 11:09:10 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -74,8 +74,9 @@ t_data_ls	*no_dir(const char *str, t_data_ls *data)
 	tmp->gp = ft_strdup(grp->gr_name);
 	tmp->pwd = ft_strdup(pswd->pw_name);
 	tmp->blck = st.st_blocks;
-	tmp->nlnk = st.st_size;
+	tmp->nlnk = st.st_nlink;
 	tmp->time = st.st_mtime;
+	tmp->size = st.st_size;
 	tmp->link = tmp->chmod[0] == 'l' ? fill_link((char*)str, st) : tmp->link;
 	tmp->date = time_ls(tmp->time);
 	tmp->next = new_data_ls();

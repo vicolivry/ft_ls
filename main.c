@@ -6,16 +6,16 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/07 15:36:04 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/14 18:18:38 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/15 15:46:10 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-static void	ft_ls2(const char *file, int i, t_data_ls *tmp)
+static void	ft_ls2(const char *file, t_data_ls *tmp, t_pars_ls *strc)
 {
-	if (i)
+	if (strc->rc)
 	{
 		ft_putchar('\n');
 		ft_printf("%s:\n", file);
@@ -25,6 +25,7 @@ static void	ft_ls2(const char *file, int i, t_data_ls *tmp)
 		ft_putstr_fd(file, 2);
 	ft_putstr_fd(": Permission denied\n", 2);
 	tmp->next = NULL;
+	strc->rr = 1;
 }
 
 void		ft_ls(const char *file, t_pars_ls *strc)
@@ -33,7 +34,6 @@ void		ft_ls(const char *file, t_pars_ls *strc)
 	DIR			*dirp;
 	t_data_ls	*tmp;
 	char		*str;
-	static int	i = 0;
 
 	tmp = strc->data;
 	if ((dirp = opendir(file)) != NULL)
@@ -53,8 +53,7 @@ void		ft_ls(const char *file, t_pars_ls *strc)
 		closedir(dirp);
 	}
 	else
-		ft_ls2(file, i, tmp);
-	i = 1;
+		ft_ls2(file, tmp, strc);
 }
 
 static void	no_arg_ls(t_pars_ls strc)

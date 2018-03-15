@@ -6,7 +6,7 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/07 15:56:20 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/14 18:04:15 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/15 11:32:43 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -37,6 +37,7 @@ t_pars_ls		init_pars_ls(void)
 	pars.rr = 0;
 	pars.a = 0;
 	pars.t = 0;
+	pars.rc = 0;
 	pars.len = init_len();
 	pars.data = new_data_ls();
 	return (pars);

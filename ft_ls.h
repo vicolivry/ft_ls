@@ -6,7 +6,7 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/07 15:21:13 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/14 17:19:30 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/15 18:15:03 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -14,7 +14,7 @@
 #ifndef FT_LS_H
 # define FT_LS_H
 
-# include "./libftprintf/printf.h"
+# include "./libft/libft.h"
 # include <dirent.h>
 # include <sys/stat.h>
 # include <sys/types.h>
@@ -46,6 +46,7 @@ typedef struct			s_pars_ls
 	int					a;
 	int					t;
 	int					g;
+	int					rc;
 	int					total_bck;
 	t_len_ls			len;
 	struct s_data_ls	*data;
@@ -110,6 +111,7 @@ void					recurse2(t_data_ls *tmp, char *str, t_pars_ls *strc);
 void					print_flag_a(t_pars_ls strc, t_data_ls *data);
 void					print_noflag(t_pars_ls strc, t_data_ls *data);
 t_len_ls				init_len(void);
+void					print_noflag2(t_pars_ls *strc, t_data_ls *tmp);
 void					multifile(int ac, int j, const char **av,
 						t_pars_ls strc);
 #endif
