@@ -6,7 +6,7 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/07 15:36:04 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/15 15:46:10 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/23 17:53:57 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -25,7 +25,7 @@ static void	ft_ls2(const char *file, t_data_ls *tmp, t_pars_ls *strc)
 		ft_putstr_fd(file, 2);
 	ft_putstr_fd(": Permission denied\n", 2);
 	tmp->next = NULL;
-	strc->rr = 1;
+	strc->rc = 1;
 }
 
 void		ft_ls(const char *file, t_pars_ls *strc)
@@ -35,7 +35,7 @@ void		ft_ls(const char *file, t_pars_ls *strc)
 	t_data_ls	*tmp;
 	char		*str;
 
-	tmp = strc->data;
+	tmp = new_data_ls();
 	if ((dirp = opendir(file)) != NULL)
 	{
 		while ((dp = readdir(dirp)) != NULL)
@@ -46,9 +46,8 @@ void		ft_ls(const char *file, t_pars_ls *strc)
 			ft_memdel((void**)&str);
 			tmp = parse_data_ls(tmp, *strc);
 			maxlen(strc, tmp);
-			if (tmp->next == NULL)
-				tmp->next = new_data_ls();
-			tmp = tmp->next;
+			insert_sort(&strc->data, *strc, tmp);
+			tmp = new_data_ls();
 		}
 		closedir(dirp);
 	}
@@ -59,6 +58,11 @@ void		ft_ls(const char *file, t_pars_ls *strc)
 static void	no_arg_ls(t_pars_ls strc)
 {
 	strc.rr ? ft_ls_r(".", &strc) : ft_ls(".", &strc);
+/*	while (strc.data)
+	{
+		ft_printf("NAME: %s\n", strc.data->name);
+		strc.data = strc.data->next;
+	}*/
 	display(strc, strc.data);
 	free_ls(strc.data);
 }
@@ -78,11 +82,7 @@ int			main(int ac, const char **av)
 			if (!(parse_ls(&strc, av[j])))
 				return (-1);
 		if (j == ac)
-		{
-			strc.rr ? ft_ls_r(".", &strc) : ft_ls(".", &strc);
-			display(strc, strc.data);
-			free_ls(strc.data);
-		}
+			no_arg_ls(strc);
 		else
 			multifile(ac, j, av, strc);
 	}

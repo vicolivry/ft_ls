@@ -6,7 +6,7 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/09 11:12:09 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/06 17:03:19 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/22 16:34:44 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -35,6 +35,7 @@ char	*chmod_ls(t_st stat)
 	str[7] = (stat.st_mode & S_IROTH) ? 'r' : '-';
 	str[8] = (stat.st_mode & S_IWOTH) ? 'w' : '-';
 	str[9] = (stat.st_mode & S_IXOTH) ? 'x' : '-';
+	str[9] = (stat.st_mode & S_ISVTX) ? 'T' : str[9];
 	str[10] = '\0';
 	return (str);
 }

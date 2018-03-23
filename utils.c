@@ -6,7 +6,7 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/16 13:12:41 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/14 18:09:23 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/23 12:03:39 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -62,7 +62,7 @@ int			total_bck(t_data_ls *data)
 
 	total = 0;
 	tmp = data;
-	while (tmp->next)
+	while (tmp)
 	{
 		total += tmp->blck;
 		tmp = tmp->next;

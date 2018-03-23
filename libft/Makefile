@@ -6,14 +6,14 @@
 #    By: volivry <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/10 09:59:28 by volivry           #+#    #+#              #
-#    Updated: 2018/03/15 18:30:14 by volivry     ###    #+. /#+    ###.fr      #
+#    Updated: 2018/03/19 11:29:04 by volivry     ###    #+. /#+    ###.fr      #
 #                                                                              #
 # **************************************************************************** #
 .PHONY: all clean fclean re
 
 CC = gcc $(FLAGS)
 FLAGS = -Wall -Wextra
-NAME = libft1.a
+NAME = libft.a
 SRC = ft_memset.c ft_bzero.c ft_memcpy.c ft_memccpy.c ft_memmove.c\
 	  ft_memchr.c ft_memcmp.c ft_strlen.c ft_strdup.c ft_strcpy.c\
 	  ft_strncpy.c ft_strcat.c ft_strncat.c ft_strlcat.c ft_strchr.c\
@@ -41,12 +41,15 @@ all: $(NAME)
 	@$(CC) -I. -o $@ -c $<
 
 $(NAME): $(OBJECTS)
+	@echo "Generating libft.a"
 	@ar rcs $(NAME) $(OBJECTS)
 
 clean:
+	@echo "Cleaning libft.a"
 	@rm -f $(OBJECTS)
 
 fclean: clean
+	@echo "Super cleaning libft.a"
 	@rm -f $(NAME)
 
 re: fclean all

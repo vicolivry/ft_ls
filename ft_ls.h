@@ -6,7 +6,7 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/07 15:21:13 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/15 18:15:03 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/23 13:22:11 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -95,10 +95,10 @@ void					maxlen(t_pars_ls *strc, t_data_ls *data);
 int						check_permission(char *str);
 int						total_bck(t_data_ls *data);
 void					swap_lst(t_data_ls **lst1, t_data_ls **lst2);
-void					ascii_sort(t_data_ls *lst);
-void					rev_ascii_sort(t_data_ls *lst);
-void					time_sort(t_data_ls *lst);
-void					rev_time_sort(t_data_ls *lst);
+void					ascii_sort(t_data_ls **lst, t_data_ls *newb);
+void					rev_ascii_sort(t_data_ls **lst, t_data_ls *newb);
+void					time_sort(t_data_ls **lst, t_data_ls *newb);
+void					rev_time_sort(t_data_ls **lst, t_data_ls *newb);
 void					display(t_pars_ls strc, t_data_ls *data);
 void					free_ls(t_data_ls *data);
 char					*fill_link(char *path, t_st st);
@@ -112,6 +112,7 @@ void					print_flag_a(t_pars_ls strc, t_data_ls *data);
 void					print_noflag(t_pars_ls strc, t_data_ls *data);
 t_len_ls				init_len(void);
 void					print_noflag2(t_pars_ls *strc, t_data_ls *tmp);
+void					insert_sort(t_data_ls **data, t_pars_ls strc, t_data_ls *newb);
 void					multifile(int ac, int j, const char **av,
 						t_pars_ls strc);
 #endif

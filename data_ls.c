@@ -6,7 +6,7 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/07 18:31:51 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/15 16:39:32 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/23 15:40:20 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -38,6 +38,7 @@ t_data_ls	*new_data_ls(void)
 	new->time = 0;
 	new->minor = 0;
 	new->major = 0;
+	new->error = 0;
 	new->empty = 0;
 	new->link = NULL;
 	return (new);

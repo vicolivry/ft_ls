@@ -6,7 +6,7 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/12 16:09:30 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/15 17:58:06 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/23 17:59:42 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -14,14 +14,15 @@
 #include "ft_ls.h"
 #include <stdio.h>
 
-static void	recurse(const char *file, t_data_ls *data, t_pars_ls *strc)
+static void	recurse(const char *file, t_data_ls **data, t_pars_ls *strc)
 {
 	t_dir		*dp;
 	DIR			*dirp;
 	t_data_ls	*tmp;
 	char		*str;
 
-	tmp = data;
+	*data = NULL;
+	tmp = new_data_ls();
 	dirp = opendir(file);
 	while ((dp = readdir(dirp)) != NULL)
 	{
@@ -32,10 +33,9 @@ static void	recurse(const char *file, t_data_ls *data, t_pars_ls *strc)
 		ft_memdel((void**)&str);
 		tmp = parse_data_ls(tmp, *strc);
 		maxlen(strc, tmp);
+		insert_sort(data, *strc, tmp);
 		recurse2(tmp, str, strc);
-		if (tmp->next == NULL)
-			tmp->next = new_data_ls();
-		tmp = tmp->next;
+		tmp = new_data_ls();
 	}
 	closedir(dirp);
 }
@@ -62,7 +62,7 @@ void		recurse2(t_data_ls *tmp, char *str, t_pars_ls *strc)
 	{
 		tmp->oth_lst = new_data_ls();
 		str = ft_strjoin(tmp->path, tmp->name);
-		recurse(str, tmp->oth_lst, strc);
+		recurse(str, &tmp->oth_lst, strc);
 		ft_memdel((void**)&str);
 	}
 }
@@ -88,8 +88,10 @@ static void	ft_ls_r2(t_data_ls *tmp, char *str, t_pars_ls *strc)
 			&& ft_strcmp(tmp->name, ".."))
 	{
 		tmp->oth_lst = new_data_ls();
+//		tmp->oth_lst->name = ft_strdup(tmp->name);
+//		tmp->oth_lst = parse_data_ls(tmp, *strc);
 		str = ft_strjoin(tmp->path, tmp->name);
-		recurse(str, tmp->oth_lst, strc);
+		recurse(str, &tmp->oth_lst, strc);
 		ft_memdel((void**)&str);
 	}
 }
@@ -116,7 +118,7 @@ void		ft_ls_r(const char *file, t_pars_ls *strc)
 	t_data_ls	*tmp;
 	char		*str;
 
-	tmp = strc->data;
+	tmp = new_data_ls();
 	if ((dirp = opendir(file)) != NULL)
 	{
 		while ((dp = readdir(dirp)) != NULL)
@@ -128,14 +130,15 @@ void		ft_ls_r(const char *file, t_pars_ls *strc)
 			ft_memdel((void**)&str);
 			tmp = parse_data_ls(tmp, *strc);
 			maxlen(strc, tmp);
+			insert_sort(&strc->data, *strc, tmp);
 			ft_ls_r2(tmp, str, strc);
-			if (tmp->next == NULL)
-				tmp->next = new_data_ls();
-			tmp = tmp->next;
+
+			tmp = new_data_ls();
 		}
 		closedir(dirp);
-
 	}
 	else
 		ft_ls_r3(file, tmp, strc);
+	while (!strc->data->oth_lst)
+		strc->data = strc->data->next;
 }

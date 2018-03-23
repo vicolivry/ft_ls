@@ -6,7 +6,7 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/03/06 13:38:59 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/15 16:21:36 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/23 17:59:46 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,24 +15,24 @@
 
 void		print_noflag2(t_pars_ls *strc, t_data_ls *tmp)
 {
-	while (tmp->next)
+	while (tmp)
 	{
 		if (tmp->name[0] != '.')
 		{
 			if (strc->l)
 			{
-				ft_printf("%s %*d ", tmp->chmod, strc->len.nlnk,
+				ft_printf("%s  %*d ", tmp->chmod, strc->len.nlnk,
 						tmp->nlnk);
 				if (!strc->g)
 					ft_printf("%-*s ", strc->len.pwd, tmp->pwd);
-				ft_printf("%-*s ", strc->len.gp, tmp->gp);
+				ft_printf(" %-*s  ", strc->len.gp, tmp->gp);
 				if (tmp->chmod[0] == 'b' || tmp->chmod[0] == 'c')
 					ft_printf("%*d, %*d ", strc->len.maj, tmp->major,
 							strc->len.min, tmp->minor);
 				else
 					ft_printf("%*d ", strc->len.min ? strc->len.min +
 							strc->len.maj + 2 : strc->len.size, tmp->size);
-				ft_printf(" %s %s", tmp->date, tmp->name);
+				ft_printf("%s %s", tmp->date, tmp->name);
 				tmp->link ? ft_printf(" %s\n", tmp->link) : ft_putchar('\n');
 			}
 			else
@@ -45,8 +45,8 @@ void		print_noflag2(t_pars_ls *strc, t_data_ls *tmp)
 
 static void	print_noflag3(t_pars_ls *strc, t_data_ls *tmp)
 {
-	while (tmp->next)
-	{
+	while (tmp)
+		{
 		if (!tmp->access && tmp->oth_lst && strc->rr)
 		{
 			tmp->oth_lst->path[ft_strlen(tmp->oth_lst->path) - 1] = ':';
@@ -72,11 +72,7 @@ void		print_noflag(t_pars_ls strc, t_data_ls *data)
 	if (strc.rc)
 		ft_putstr("\n");
 	if (tmp->access)
-		tmp->empty = tmp->next->next->next ? 0 : 1;
-	if (tmp->access)
-		strc.r ? rev_ascii_sort(tmp) : ascii_sort(tmp);
-	if (tmp->access && strc.t)
-		strc.r ? rev_time_sort(tmp) : time_sort(tmp);
+		tmp->empty = tmp->next ? 0 : 1;
 	if (strc.rc && tmp->path && ft_strcmp(tmp->path, "./") &&
 			ft_strcmp(tmp->name, "../"))
 	{
