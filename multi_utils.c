@@ -6,7 +6,7 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/21 11:51:13 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/21 16:14:34 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/26 16:19:47 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -42,29 +42,25 @@ int			check_dir(const char *str)
 	return (ret);
 }
 
-t_data_ls	*no_such_file(const char *str, t_data_ls *data)
+t_data_ls	*no_such_file(const char *str, t_data_ls *data, t_pars_ls *strc)
 {
 	t_data_ls	*tmp;
 
-	tmp = data;
-	while (tmp->next)
-		tmp = tmp->next;
+	tmp = new_data_ls();
 	tmp->name = ft_strdup(str);
 	tmp->error = errno;
-	tmp->next = new_data_ls();
+	strc->r && !strc->t ? rev_ascii_sort(&data, tmp) : ascii_sort(&data, tmp);
 	return (data);
 }
 
-t_data_ls	*no_dir(const char *str, t_data_ls *data)
+t_data_ls	*no_dir(const char *str, t_data_ls *data, t_pars_ls *strc)
 {
 	t_data_ls	*tmp;
 	t_st		st;
 	t_passwd	*pswd;
 	t_gp		*grp;
 
-	tmp = data;
-	while (tmp->next)
-		tmp = tmp->next;
+	tmp = new_data_ls();
 	tmp->name = ft_strdup(str);
 	tmp->path = ft_strdup(str);
 	lstat(str, &st);
@@ -79,6 +75,7 @@ t_data_ls	*no_dir(const char *str, t_data_ls *data)
 	tmp->size = st.st_size;
 	tmp->link = tmp->chmod[0] == 'l' ? fill_link((char*)str, st) : tmp->link;
 	tmp->date = time_ls(tmp->time);
-	tmp->next = new_data_ls();
+	strc->r && !strc->t ? rev_ascii_sort(&data, tmp) : ascii_sort(&data, tmp);
+	tmp->next = NULL;
 	return (data);
 }

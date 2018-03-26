@@ -6,7 +6,7 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/07 15:36:04 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/23 17:53:57 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/26 18:11:19 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -46,10 +46,14 @@ void		ft_ls(const char *file, t_pars_ls *strc)
 			ft_memdel((void**)&str);
 			tmp = parse_data_ls(tmp, *strc);
 			maxlen(strc, tmp);
-			insert_sort(&strc->data, *strc, tmp);
+			strc->r && !strc->t ? rev_ascii_sort(&strc->data, tmp) :
+				ascii_sort(&strc->data, tmp);
 			tmp = new_data_ls();
 		}
+		if (strc->t)
+			insert_time(&strc->data, *strc);
 		closedir(dirp);
+		ft_memdel((void**)&tmp);
 	}
 	else
 		ft_ls2(file, tmp, strc);
@@ -58,11 +62,6 @@ void		ft_ls(const char *file, t_pars_ls *strc)
 static void	no_arg_ls(t_pars_ls strc)
 {
 	strc.rr ? ft_ls_r(".", &strc) : ft_ls(".", &strc);
-/*	while (strc.data)
-	{
-		ft_printf("NAME: %s\n", strc.data->name);
-		strc.data = strc.data->next;
-	}*/
 	display(strc, strc.data);
 	free_ls(strc.data);
 }

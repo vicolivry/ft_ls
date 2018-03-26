@@ -6,7 +6,7 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/03/06 16:47:09 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/22 17:47:43 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/26 17:46:25 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,7 +15,7 @@
 
 static void	free_recurse_ls(t_data_ls *tmp)
 {
-	while (tmp->next)
+	while (tmp)
 	{
 		if (tmp->access && tmp->oth_lst)
 			free_ls(tmp->oth_lst);
@@ -31,7 +31,7 @@ void		free_ls(t_data_ls *data)
 	tmp = data;
 	free_recurse_ls(tmp);
 	tmp = data;
-	while (tmp->next)
+	while (tmp)
 	{
 		tmp2 = tmp->next;
 		ft_memdel((void**)&tmp->date);
@@ -45,5 +45,5 @@ void		free_ls(t_data_ls *data)
 		ft_memdel((void**)&tmp);
 		tmp = tmp2;
 	}
-	ft_memdel((void**)&tmp2);
+//	ft_memdel((void**)&tmp);
 }

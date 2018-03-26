@@ -6,12 +6,29 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/03/06 13:38:59 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/23 17:59:46 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/26 18:10:46 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
+
+static void	long_format(t_data_ls *tmp, t_pars_ls *strc)
+{
+	ft_printf("%s  %*d ", tmp->chmod, strc->len.nlnk,
+			tmp->nlnk);
+	if (!strc->g)
+		ft_printf("%-*s ", strc->len.pwd, tmp->pwd);
+	ft_printf(" %-*s  ", strc->len.gp, tmp->gp);
+	if (tmp->chmod[0] == 'b' || tmp->chmod[0] == 'c')
+		ft_printf("%*d, %*d ", strc->len.maj, tmp->major,
+				strc->len.min, tmp->minor);
+	else
+		ft_printf("%*d ", strc->len.min ? strc->len.min +
+				strc->len.maj + 2 : strc->len.size, tmp->size);
+	ft_printf("%s %s", tmp->date, tmp->name);
+	tmp->link ? ft_printf(" %s\n", tmp->link) : ft_putchar('\n');
+}
 
 void		print_noflag2(t_pars_ls *strc, t_data_ls *tmp)
 {
@@ -20,21 +37,7 @@ void		print_noflag2(t_pars_ls *strc, t_data_ls *tmp)
 		if (tmp->name[0] != '.')
 		{
 			if (strc->l)
-			{
-				ft_printf("%s  %*d ", tmp->chmod, strc->len.nlnk,
-						tmp->nlnk);
-				if (!strc->g)
-					ft_printf("%-*s ", strc->len.pwd, tmp->pwd);
-				ft_printf(" %-*s  ", strc->len.gp, tmp->gp);
-				if (tmp->chmod[0] == 'b' || tmp->chmod[0] == 'c')
-					ft_printf("%*d, %*d ", strc->len.maj, tmp->major,
-							strc->len.min, tmp->minor);
-				else
-					ft_printf("%*d ", strc->len.min ? strc->len.min +
-							strc->len.maj + 2 : strc->len.size, tmp->size);
-				ft_printf("%s %s", tmp->date, tmp->name);
-				tmp->link ? ft_printf(" %s\n", tmp->link) : ft_putchar('\n');
-			}
+				long_format(tmp, strc);
 			else
 				ft_printf("%s\n", tmp->name);
 		}
@@ -46,7 +49,7 @@ void		print_noflag2(t_pars_ls *strc, t_data_ls *tmp)
 static void	print_noflag3(t_pars_ls *strc, t_data_ls *tmp)
 {
 	while (tmp)
-		{
+	{
 		if (!tmp->access && tmp->oth_lst && strc->rr)
 		{
 			tmp->oth_lst->path[ft_strlen(tmp->oth_lst->path) - 1] = ':';
