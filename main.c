@@ -6,7 +6,7 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/07 15:36:04 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/26 18:11:19 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/27 19:15:05 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -45,13 +45,18 @@ void		ft_ls(const char *file, t_pars_ls *strc)
 			tmp->path = ft_strdup(str);
 			ft_memdel((void**)&str);
 			tmp = parse_data_ls(tmp, *strc);
-			maxlen(strc, tmp);
 			strc->r && !strc->t ? rev_ascii_sort(&strc->data, tmp) :
 				ascii_sort(&strc->data, tmp);
 			tmp = new_data_ls();
 		}
 		if (strc->t)
 			insert_time(&strc->data, *strc);
+		tmp = strc->data;
+		while (tmp)
+		{
+			maxlen(strc->data, tmp);
+			tmp = tmp->next;
+		}
 		closedir(dirp);
 		ft_memdel((void**)&tmp);
 	}

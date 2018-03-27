@@ -6,7 +6,7 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/21 11:51:13 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/26 16:19:47 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/27 19:02:14 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -18,7 +18,6 @@ t_data_ls	*parse_multi_ls(t_data_ls *data)
 	t_st	st;
 
 	lstat(data->name, &st);
-	data->len = ft_strlen(data->name);
 	data->time = st.st_mtime;
 	return (data);
 }

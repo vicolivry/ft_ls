@@ -6,7 +6,7 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/12 16:09:30 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/26 18:18:26 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/27 19:24:35 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -32,13 +32,18 @@ static void	recurse(const char *file, t_data_ls **data, t_pars_ls *strc)
 			: ft_strdup(str);
 		ft_memdel((void**)&str);
 		tmp = parse_data_ls(tmp, *strc);
-		maxlen(strc, tmp);
 		strc->r && !strc->t ? rev_ascii_sort(data, tmp) : ascii_sort(data, tmp);
 		recurse2(tmp, str, strc);
 		tmp = new_data_ls();
 	}
 	if (strc->t)
 		insert_time(data, *strc);
+	tmp = *data;
+	while (tmp)
+	{
+		maxlen(*data, tmp);
+		tmp = tmp->next;
+	}
 	closedir(dirp);
 	ft_memdel((void**)&tmp);
 }
@@ -63,7 +68,6 @@ void		recurse2(t_data_ls *tmp, char *str, t_pars_ls *strc)
 			tmp->access &&
 			ft_strcmp(tmp->name, ".") && ft_strcmp(tmp->name, ".."))
 	{
-		tmp->oth_lst = new_data_ls();
 		str = ft_strjoin(tmp->path, tmp->name);
 		recurse(str, &tmp->oth_lst, strc);
 		ft_memdel((void**)&str);
@@ -72,7 +76,8 @@ void		recurse2(t_data_ls *tmp, char *str, t_pars_ls *strc)
 
 static void	ft_ls_r2(t_data_ls *tmp, char *str, t_pars_ls *strc)
 {
-	if (tmp->dir->d_type == DT_DIR && !tmp->access)
+	if (tmp->dir->d_type == DT_DIR && !tmp->access && ft_strcmp(tmp->name, ".")
+			&& ft_strcmp(tmp->name, ".."))
 	{
 		tmp->oth_lst = new_data_ls();
 		str = ft_strjoin(tmp->path, tmp->name);
@@ -90,7 +95,6 @@ static void	ft_ls_r2(t_data_ls *tmp, char *str, t_pars_ls *strc)
 			tmp->access && ft_strcmp(tmp->name, ".")
 			&& ft_strcmp(tmp->name, ".."))
 	{
-		tmp->oth_lst = new_data_ls();
 		str = ft_strjoin(tmp->path, tmp->name);
 		recurse(str, &tmp->oth_lst, strc);
 		ft_memdel((void**)&str);
@@ -130,7 +134,6 @@ void		ft_ls_r(const char *file, t_pars_ls *strc)
 				: ft_strdup(str);
 			ft_memdel((void**)&str);
 			tmp = parse_data_ls(tmp, *strc);
-			maxlen(strc, tmp);
 			strc->r && !strc->t ? rev_ascii_sort(&strc->data, tmp) :
 				ascii_sort(&strc->data, tmp);
 			ft_ls_r2(tmp, str, strc);
@@ -138,6 +141,12 @@ void		ft_ls_r(const char *file, t_pars_ls *strc)
 		}
 		if (strc->t)
 			insert_time(&strc->data, *strc);
+		tmp = strc->data;
+		while (tmp)
+		{
+			maxlen(strc->data, tmp);
+			tmp = tmp->next;
+		}
 		closedir(dirp);
 		ft_memdel((void**)&tmp);
 	}

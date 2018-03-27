@@ -6,7 +6,7 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/07 18:31:51 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/26 18:05:05 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/27 11:51:46 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -16,7 +16,6 @@
 
 static void	new_data_ls2(t_data_ls *new)
 {
-	new->len = 0;
 	new->size = 0;
 	new->blck = 0;
 	new->time = 0;
@@ -45,6 +44,7 @@ t_data_ls	*new_data_ls(void)
 	new->gp = NULL;
 	new->date = NULL;
 	new->access = 0;
+	new->len = init_len();
 	new_data_ls2(new);
 	return (new);
 }
@@ -102,7 +102,6 @@ t_data_ls	*parse_data_ls(t_data_ls *data, t_pars_ls strc)
 	lstat(tmpath, &st);
 	if (S_ISDIR(st.st_mode) || data->dir->d_type == 0)
 		data->access = check_permission(tmpath);
-	data->len = ft_strlen(data->name);
 	data->chmod = chmod_ls(st);
 	pswd = getpwuid(st.st_uid);
 	grp = getgrgid(st.st_gid);

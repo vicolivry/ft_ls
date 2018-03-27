@@ -6,7 +6,7 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/09 11:12:09 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/22 16:34:44 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/27 14:46:44 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -51,7 +51,7 @@ char	*time_ls(time_t date)
 	str = ft_strnew(12);
 	tmp = ctime(&date);
 	time(&now);
-	if (now - date > 15778800 || date - now > 15778800)
+	if (now - date > 15778800 || now - date < 0)
 	{
 		while (i++ < 5)
 			str[i] = tmp[4 + i];

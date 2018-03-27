@@ -6,14 +6,14 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/03/08 18:28:49 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/26 18:07:05 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/27 19:02:11 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-static void	print_no_file(t_data_ls *nofile, t_pars_ls *strc)
+static void	print_no_file(t_data_ls *nofile)
 {
 	if (nofile)
 	{
@@ -25,7 +25,6 @@ static void	print_no_file(t_data_ls *nofile, t_pars_ls *strc)
 			perror(" ");
 			nofile = nofile->next;
 		}
-		strc->rc = 1;
 	}
 }
 
@@ -38,12 +37,12 @@ static void	print_no_dir(t_data_ls *nodir, t_pars_ls *strc)
 		insert_time(&nodir, *strc);
 	while (tmp)
 	{
-		maxlen(strc, tmp);
+		maxlen(nodir, tmp);
 		tmp = tmp->next;
 	}
 	tmp = nodir;
 	if (nodir)
-		print_noflag2(strc, tmp);
+		print_noflag2(strc, nodir, tmp);
 }
 
 static void	free_multi(t_data_ls *nofile, t_data_ls *nodir, t_data_ls *multi,
@@ -61,18 +60,24 @@ static void	multifile2(t_data_ls *nofile, t_data_ls *nodir, t_data_ls *multi,
 	t_data_ls *tmp;
 
 	if (nofile)
-		print_no_file(nofile, &strc);
+		print_no_file(nofile);
 	if (nodir)
 		print_no_dir(nodir, &strc);
 	tmp = multi;
 	if (strc.t)
 		insert_time(&nodir, strc);
+	if (multi && multi->next && (!nofile || !nodir))
+	{
+		ft_printf("%s:\n", tmp->name);
+		strc.rc = 0;
+	}
 	while (tmp)
 	{
 		strc.rr ? ft_ls_r(tmp->name, &strc) : ft_ls(tmp->name, &strc);
 		if (check_permission(tmp->name))
 		{
 			display(strc, strc.data);
+			strc.rc = 1;
 			free_ls(strc.data);
 		}
 		tmp = tmp->next;

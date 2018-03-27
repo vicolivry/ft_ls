@@ -6,38 +6,38 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/03/06 13:38:59 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/26 18:10:46 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/27 19:27:22 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-static void	long_format(t_data_ls *tmp, t_pars_ls *strc)
+static void	long_format(t_data_ls *tmp, t_data_ls *data, t_pars_ls *strc)
 {
-	ft_printf("%s  %*d ", tmp->chmod, strc->len.nlnk,
+	ft_printf("%s  %*d ", tmp->chmod, data->len.nlnk,
 			tmp->nlnk);
 	if (!strc->g)
-		ft_printf("%-*s ", strc->len.pwd, tmp->pwd);
-	ft_printf(" %-*s  ", strc->len.gp, tmp->gp);
+		ft_printf("%-*s ", data->len.pwd, tmp->pwd);
+	ft_printf(" %-*s  ", data->len.gp, tmp->gp);
 	if (tmp->chmod[0] == 'b' || tmp->chmod[0] == 'c')
-		ft_printf("%*d, %*d ", strc->len.maj, tmp->major,
-				strc->len.min, tmp->minor);
+		ft_printf("%*d, %*d ", data->len.maj, tmp->major,
+				data->len.min, tmp->minor);
 	else
-		ft_printf("%*d ", strc->len.min ? strc->len.min +
-				strc->len.maj + 2 : strc->len.size, tmp->size);
+		ft_printf("%*d ", data->len.min ? data->len.min +
+				data->len.maj + 2 : data->len.size, tmp->size);
 	ft_printf("%s %s", tmp->date, tmp->name);
 	tmp->link ? ft_printf(" %s\n", tmp->link) : ft_putchar('\n');
 }
 
-void		print_noflag2(t_pars_ls *strc, t_data_ls *tmp)
+void		print_noflag2(t_pars_ls *strc, t_data_ls *data, t_data_ls *tmp)
 {
 	while (tmp)
 	{
 		if (tmp->name[0] != '.')
 		{
 			if (strc->l)
-				long_format(tmp, strc);
+				long_format(tmp, data, strc);
 			else
 				ft_printf("%s\n", tmp->name);
 		}
@@ -53,7 +53,7 @@ static void	print_noflag3(t_pars_ls *strc, t_data_ls *tmp)
 		if (!tmp->access && tmp->oth_lst && strc->rr)
 		{
 			tmp->oth_lst->path[ft_strlen(tmp->oth_lst->path) - 1] = ':';
-			ft_putchar('\n');
+				ft_putchar('\n');
 			ft_printf("%s\n", tmp->oth_lst->path);
 			ft_putstr_fd("ft_ls: ", 2);
 			ft_putstr_fd(tmp->oth_lst->name, 2);
@@ -75,7 +75,7 @@ void		print_noflag(t_pars_ls strc, t_data_ls *data)
 	if (strc.rc)
 		ft_putstr("\n");
 	if (tmp->access)
-		tmp->empty = tmp->next ? 0 : 1;
+		tmp->empty = tmp->next->next ? 0 : 1;
 	if (strc.rc && tmp->path && ft_strcmp(tmp->path, "./") &&
 			ft_strcmp(tmp->name, "../"))
 	{
@@ -84,7 +84,7 @@ void		print_noflag(t_pars_ls strc, t_data_ls *data)
 	}
 	if (strc.l && !tmp->empty)
 		ft_printf("total %d\n", total_bck(tmp));
-	print_noflag2(&strc, tmp);
+	print_noflag2(&strc, data, tmp);
 	tmp = data;
 	print_noflag3(&strc, tmp);
 }

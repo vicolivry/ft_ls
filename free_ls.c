@@ -6,7 +6,7 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/03/06 16:47:09 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/26 17:46:25 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/27 14:50:27 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -21,6 +21,7 @@ static void	free_recurse_ls(t_data_ls *tmp)
 			free_ls(tmp->oth_lst);
 		tmp = tmp->next;
 	}
+	ft_memdel((void**)&tmp);
 }
 
 void		free_ls(t_data_ls *data)
@@ -45,5 +46,5 @@ void		free_ls(t_data_ls *data)
 		ft_memdel((void**)&tmp);
 		tmp = tmp2;
 	}
-//	ft_memdel((void**)&tmp);
+	ft_memdel((void**)&tmp);
 }

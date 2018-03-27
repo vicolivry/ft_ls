@@ -6,30 +6,30 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/03/12 18:48:23 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/26 17:22:17 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/27 16:37:05 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-static void	print_flag_a2(t_pars_ls *strc, t_data_ls *tmp)
+static void	print_flag_a2(t_pars_ls *strc, t_data_ls *data, t_data_ls *tmp)
 {
 	while (tmp)
 	{
 		if (strc->l)
 		{
-			ft_printf("%s  %*d ", tmp->chmod, strc->len.nlnk,
+			ft_printf("%s  %*d ", tmp->chmod, data->len.nlnk,
 					tmp->nlnk);
 			if (!strc->g)
-				ft_printf("%-*s  ", strc->len.pwd, tmp->pwd);
-			ft_printf("%-*s  ", strc->len.gp, tmp->gp);
+				ft_printf("%-*s  ", data->len.pwd, tmp->pwd);
+			ft_printf("%-*s  ", data->len.gp, tmp->gp);
 			if (tmp->chmod[0] == 'b' || tmp->chmod[0] == 'c')
-				ft_printf("%*d, %*d ", strc->len.maj, tmp->major,
-						strc->len.min, tmp->minor);
+				ft_printf("%*d, %*d ", data->len.maj, tmp->major,
+						data->len.min, tmp->minor);
 			else
-				ft_printf("%*d ", strc->len.min ? strc->len.min +
-						strc->len.maj + 2 : strc->len.size, tmp->size);
+				ft_printf("%*d ", data->len.min ? data->len.min +
+						data->len.maj + 2 : data->len.size, tmp->size);
 			ft_printf("%s %s", tmp->date, tmp->name);
 			tmp->link ? ft_printf(" %s\n", tmp->link) : ft_putchar('\n');
 		}
@@ -70,16 +70,16 @@ void		print_flag_a(t_pars_ls strc, t_data_ls *data)
 	if (strc.rc)
 		ft_putchar('\n');
 	if (tmp->access)
-		tmp->empty = tmp->next ? 0 : 1;
+		tmp->empty = tmp->next->next ? 0 : 1;
 	if (strc.rc && tmp->path && ft_strcmp(tmp->path, "./") &&
 			ft_strcmp(tmp->name, "../"))
 	{
 		tmp->path[ft_strlen(tmp->path) - 1] = ':';
 		ft_printf("%s\n", tmp->path);
 	}
-	if (strc.l && !tmp->empty)
+	if (strc.l)
 		ft_printf("total %d\n", total_bck(tmp));
-	print_flag_a2(&strc, tmp);
+	print_flag_a2(&strc, data, tmp);
 	tmp = data;
 	print_flag_a3(&strc, tmp);
 }
