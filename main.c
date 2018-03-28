@@ -6,63 +6,12 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/07 15:36:04 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/27 19:15:05 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/28 14:59:32 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
-
-static void	ft_ls2(const char *file, t_data_ls *tmp, t_pars_ls *strc)
-{
-	if (strc->rc)
-	{
-		ft_putchar('\n');
-		ft_printf("%s:\n", file);
-	}
-	ft_putstr_fd("ft_ls: ", 2);
-	if (file[ft_strlen(file) - 1] != '/')
-		ft_putstr_fd(file, 2);
-	ft_putstr_fd(": Permission denied\n", 2);
-	tmp->next = NULL;
-	strc->rc = 1;
-}
-
-void		ft_ls(const char *file, t_pars_ls *strc)
-{
-	t_dir		*dp;
-	DIR			*dirp;
-	t_data_ls	*tmp;
-	char		*str;
-
-	tmp = new_data_ls();
-	if ((dirp = opendir(file)) != NULL)
-	{
-		while ((dp = readdir(dirp)) != NULL)
-		{
-			tmp->dir = dp;
-			str = ft_strjoin(file, "/");
-			tmp->path = ft_strdup(str);
-			ft_memdel((void**)&str);
-			tmp = parse_data_ls(tmp, *strc);
-			strc->r && !strc->t ? rev_ascii_sort(&strc->data, tmp) :
-				ascii_sort(&strc->data, tmp);
-			tmp = new_data_ls();
-		}
-		if (strc->t)
-			insert_time(&strc->data, *strc);
-		tmp = strc->data;
-		while (tmp)
-		{
-			maxlen(strc->data, tmp);
-			tmp = tmp->next;
-		}
-		closedir(dirp);
-		ft_memdel((void**)&tmp);
-	}
-	else
-		ft_ls2(file, tmp, strc);
-}
 
 static void	no_arg_ls(t_pars_ls strc)
 {
@@ -84,7 +33,7 @@ int			main(int ac, const char **av)
 	{
 		while (av[++j] && av[j][0] == '-' && av[j][1] && j <= ac)
 			if (!(parse_ls(&strc, av[j])))
-				return (-1);
+				return (1);
 		if (j == ac)
 			no_arg_ls(strc);
 		else

@@ -6,7 +6,7 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/07 15:56:20 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/27 19:04:50 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/28 15:40:41 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -34,6 +34,7 @@ t_pars_ls		init_pars_ls(void)
 	pars.u = 0;
 	pars.l = 0;
 	pars.r = 0;
+	pars.g = 0;
 	pars.rr = 0;
 	pars.a = 0;
 	pars.t = 0;
@@ -52,7 +53,7 @@ int				parse_ls(t_pars_ls *pars, const char *str)
 		if (!ft_strchr(FLAGS_LS, str[i]))
 		{
 			ft_printf("ft_ls: illegal option -- %c", str[i]);
-			ft_printf("\nusage: ft_ls [%s] [file ...]\n", FLAGS_LS);
+			ft_printf("\nusage: ft_ls [-%s] [file ...]\n", FLAGS_LS);
 			return (0);
 		}
 		else

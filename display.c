@@ -6,7 +6,7 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/03/06 13:38:59 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/27 19:27:22 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/28 13:12:33 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -53,7 +53,7 @@ static void	print_noflag3(t_pars_ls *strc, t_data_ls *tmp)
 		if (!tmp->access && tmp->oth_lst && strc->rr)
 		{
 			tmp->oth_lst->path[ft_strlen(tmp->oth_lst->path) - 1] = ':';
-				ft_putchar('\n');
+			ft_putchar('\n');
 			ft_printf("%s\n", tmp->oth_lst->path);
 			ft_putstr_fd("ft_ls: ", 2);
 			ft_putstr_fd(tmp->oth_lst->name, 2);

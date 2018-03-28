@@ -6,7 +6,7 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/03/12 17:53:17 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/27 19:23:06 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/28 13:36:17 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -72,8 +72,7 @@ void	time_sort(t_data_ls **data, t_data_ls *newb)
 {
 	t_data_ls	*tmp;
 
-	if (*data == NULL || ((*data)->time <= newb->time /*&&
-				ft_strcmp((*data)->name, newb->name) > 0*/))
+	if (*data == NULL || (*data)->time < newb->time)
 	{
 		newb->next = *data;
 		*data = newb;
@@ -81,7 +80,8 @@ void	time_sort(t_data_ls **data, t_data_ls *newb)
 	else
 	{
 		tmp = *data;
-		while (tmp->next && tmp->next->time >= newb->time)
+		while (tmp->next && tmp->next->time >= newb->time &&
+				ft_strcmp((*data)->name, newb->name) < 0)
 			tmp = tmp->next;
 		newb->next = tmp->next;
 		tmp->next = newb;
@@ -92,8 +92,7 @@ void	rev_time_sort(t_data_ls **data, t_data_ls *newb)
 {
 	t_data_ls	*tmp;
 
-	if (*data == NULL || ((*data)->time >= newb->time &&
-				ft_strcmp((*data)->name, newb->name) < 0))
+	if (*data == NULL || (*data)->time > newb->time)
 	{
 		newb->next = *data;
 		*data = newb;
@@ -101,7 +100,8 @@ void	rev_time_sort(t_data_ls **data, t_data_ls *newb)
 	else
 	{
 		tmp = *data;
-		while (tmp->next && tmp->next->time <= newb->time)
+		while (tmp->next && tmp->next->time <= newb->time &&
+				ft_strcmp((*data)->name, newb->name) > 0)
 			tmp = tmp->next;
 		newb->next = tmp->next;
 		tmp->next = newb;

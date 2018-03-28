@@ -6,7 +6,7 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/07 15:21:13 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/27 19:02:36 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/28 17:04:28 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -104,15 +104,25 @@ char					*fill_link(char *path, t_st st);
 t_data_ls				*parse_multi_ls(t_data_ls *data);
 int						check_exist(const char *str);
 int						check_dir(const char *str);
-t_data_ls				*no_such_file(const char *str, t_data_ls *data, t_pars_ls *strc);
-t_data_ls				*no_dir(const char *str, t_data_ls *data, t_pars_ls *strc);
+t_data_ls				*no_such_file(const char *str, t_data_ls *data,
+						t_pars_ls *strc);
+t_data_ls				*no_dir(const char *str, t_data_ls *data,
+						t_pars_ls *strc);
 void					recurse2(t_data_ls *tmp, char *str, t_pars_ls *strc);
 void					print_flag_a(t_pars_ls strc, t_data_ls *data);
 void					print_noflag(t_pars_ls strc, t_data_ls *data);
 t_len_ls				init_len(void);
-void					print_noflag2(t_pars_ls *strc, t_data_ls *data, t_data_ls *tmp);
+void					print_noflag2(t_pars_ls *strc, t_data_ls *data,
+						t_data_ls *tmp);
 void					insert_time(t_data_ls **data, t_pars_ls strc);
-void					insert_sort(t_data_ls **data, t_pars_ls strc, t_data_ls *newb);
+void					insert_sort(t_data_ls **data, t_pars_ls strc,
+						t_data_ls *newb);
 void					multifile(int ac, int j, const char **av,
 						t_pars_ls strc);
+void					print_no_file(t_data_ls *nofile);
+void					print_no_dir(t_data_ls *nodir, t_pars_ls *strc);
+void					free_multi(t_data_ls *nofile, t_data_ls *nodir,
+						t_data_ls *multi, t_pars_ls strc);
+void					recurse(const char *file, t_data_ls **data,
+						t_pars_ls *strc);
 #endif

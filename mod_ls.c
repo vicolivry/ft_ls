@@ -6,7 +6,7 @@
 /*   By: volivry <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/09 11:12:09 by volivry      #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/27 14:46:44 by volivry     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/28 18:05:22 by volivry     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -29,12 +29,18 @@ char	*chmod_ls(t_st stat)
 	str[1] = (stat.st_mode & S_IRUSR) ? 'r' : '-';
 	str[2] = (stat.st_mode & S_IWUSR) ? 'w' : '-';
 	str[3] = (stat.st_mode & S_IXUSR) ? 'x' : '-';
+	str[3] = (stat.st_mode & S_ISVTX) ? 'T' : str[3];
 	str[4] = (stat.st_mode & S_IRGRP) ? 'r' : '-';
 	str[5] = (stat.st_mode & S_IWGRP) ? 'w' : '-';
 	str[6] = (stat.st_mode & S_IXGRP) ? 'x' : '-';
+	str[6] = (stat.st_mode & S_ISUID) ? 'S' : str[6];
+	str[6] = (stat.st_mode & S_ISGID) ? 's' : str[6];
+	str[6] = (stat.st_mode & S_ISVTX) ? 'T' : str[6];
 	str[7] = (stat.st_mode & S_IROTH) ? 'r' : '-';
 	str[8] = (stat.st_mode & S_IWOTH) ? 'w' : '-';
 	str[9] = (stat.st_mode & S_IXOTH) ? 'x' : '-';
+	str[9] = (stat.st_mode & S_ISUID) ? 'S' : str[9];
+	str[9] = (stat.st_mode & S_ISGID) ? 's' : str[9];
 	str[9] = (stat.st_mode & S_ISVTX) ? 'T' : str[9];
 	str[10] = '\0';
 	return (str);
